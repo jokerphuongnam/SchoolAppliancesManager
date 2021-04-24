@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'dagger.hilt.android.plugin'
 }
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 30
@@ -54,6 +55,11 @@ dependencies {
     room()
 
     rxjava()
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
 
 private daggerHilt(){

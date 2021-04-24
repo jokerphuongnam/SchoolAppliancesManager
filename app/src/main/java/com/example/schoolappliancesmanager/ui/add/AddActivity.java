@@ -1,6 +1,7 @@
 package com.example.schoolappliancesmanager.ui.add;
 
 import android.content.Intent;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -14,11 +15,16 @@ import com.example.schoolappliancesmanager.ui.add.room.AddRoomFragment;
 import com.example.schoolappliancesmanager.ui.base.BaseActivity;
 import com.example.schoolappliancesmanager.ui.main.MainActivity;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+import static com.example.schoolappliancesmanager.ui.add.AddActivity.TypeAction.ADD;
+import static com.example.schoolappliancesmanager.ui.add.AddActivity.TypeAction.EDIT;
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.DATA;
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.TYPE_UPDATE;
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.TypeUpdate.APPLIANCE;
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.TypeUpdate.ROOM;
 
+@AndroidEntryPoint
 public class AddActivity extends BaseActivity<ActivityAddBinding, AddViewModel> {
 
     public AddActivity() {
@@ -31,8 +37,7 @@ public class AddActivity extends BaseActivity<ActivityAddBinding, AddViewModel> 
     }
 
     private void setUpFragment() {
-        Intent intent = getIntent();
-        switch (MainActivity.TypeUpdate.valueOf(intent.getStringExtra(TYPE_UPDATE))) {
+        switch (viewModel.getTypeUpdate()) {
             case ROOM:
                 openFragment(new AddRoomFragment(), getString(R.string.add_room_fragment));
                 viewModel.setTypeUpdate(ROOM);
@@ -53,10 +58,12 @@ public class AddActivity extends BaseActivity<ActivityAddBinding, AddViewModel> 
         setSupportActionBar(binding.toolBar);
         actionBar = getSupportActionBar();
         actionBar.setTitle(
-                setTitle(getIntent().hasExtra(DATA),
+                setTitle(
+                        getIntent().hasExtra(DATA),
                         MainActivity.TypeUpdate.valueOf(getIntent().getStringExtra(TYPE_UPDATE))
                 )
         );
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @NonNull
@@ -67,8 +74,20 @@ public class AddActivity extends BaseActivity<ActivityAddBinding, AddViewModel> 
 
     @Override
     public void createView() {
+        Intent intent = getIntent();
+        viewModel.setTypeUpdate(MainActivity.TypeUpdate.valueOf(intent.getStringExtra(TYPE_UPDATE)));
+        viewModel.setTypeAction(intent.hasExtra(DATA) ? EDIT : ADD);
         setUpFragment();
         setUpActionBar();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

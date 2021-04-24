@@ -11,7 +11,7 @@
     <string name="detail_used">Detail used list</string>
     <string name="appliances">Appliance list</string>
     <string name="exit">Exit</string>
-    <string name="appliance_name">Name:</string>
+    <string name="appliance_name">Appliance name:</string>
     <string name="status">Status:</string>
     <string name="room_name">Room name:</string>
     <string name="date_used">Date used:</string>
@@ -24,4 +24,9 @@
     <string name="appliance">Appliance</string>
     <string name="room">Room</string>
     <string name="success">Success</string>
+    <string name="delete_image">Delete image</string>
+    <string name="room_name_same">Room name is the same</string>
+    <string name="room_name_empty">Room name can\'t empty</string>
+    <string name="appliance_name_empty" >Appliance name can\'t empty</string>
+    <string name="class_name_empty" >Class name can\'t empty</string>
 </resources>

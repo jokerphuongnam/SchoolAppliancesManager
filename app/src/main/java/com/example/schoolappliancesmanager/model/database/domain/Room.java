@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey;
 
 import com.example.schoolappliancesmanager.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +22,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(tableName = "rooms")
-public class Room {
+public class Room implements Serializable {
     @PrimaryKey
     @ColumnInfo(name = "room_id")
     @NonNull
-    private String roomName;
+    private String roomName = "";
     @ColumnInfo(name = "type")
     private RoomType type;
 
@@ -45,7 +46,7 @@ public class Room {
             return res;
         }
 
-        public static List<String> toList(Context context){
+        public static List<String> toList(Context context) {
             List<String> list = new ArrayList<>();
             list.add(context.getString(STUDY.getRes()));
             list.add(context.getString(LAB.getRes()));
@@ -70,7 +71,7 @@ public class Room {
     }
 
     @NonNull
-    public String getTypeString(@NonNull Context context){
+    public String getTypeString(@NonNull Context context) {
         return context.getString(type.getRes());
     }
 }

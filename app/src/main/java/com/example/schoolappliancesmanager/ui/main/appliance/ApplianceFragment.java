@@ -11,12 +11,15 @@ import com.example.schoolappliancesmanager.databinding.FragmentApplianceBinding;
 import com.example.schoolappliancesmanager.ui.add.AddActivity;
 import com.example.schoolappliancesmanager.ui.base.BaseFragment;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.TYPE_ACTION;
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.TYPE_UPDATE;
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.TypeUpdate.APPLIANCE;
 
+@AndroidEntryPoint
 public class ApplianceFragment extends BaseFragment<FragmentApplianceBinding, ApplianceViewModel> {
 
     @Override

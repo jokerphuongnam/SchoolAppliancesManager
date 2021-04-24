@@ -10,27 +10,26 @@ import androidx.room.PrimaryKey;
 
 import com.example.schoolappliancesmanager.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(tableName = "appliances")
-public class Appliance {
+public class Appliance implements Serializable {
     @PrimaryKey
     @ColumnInfo(name = "appliance_id")
     private long applianceId;
     @ColumnInfo(name = "appliance_name")
-    private String applianceName;
+    private String applianceName = "";
     @ColumnInfo(name = "dir_image")
-    private String dirImage;
+    private String dirImage = null;
     @ColumnInfo(name = "status")
     private Status status;
 
@@ -51,7 +50,7 @@ public class Appliance {
             return res;
         }
 
-        public static List<String> toList(Context context){
+        public static List<String> toList(Context context) {
             List<String> list = new ArrayList<>();
             list.add(context.getString(BROKEN.getRes()));
             list.add(context.getString(NORMAL.getRes()));
@@ -99,7 +98,7 @@ public class Appliance {
     }
 
     @NonNull
-    public String getStatusString(@NonNull Context context){
+    public String getStatusString(@NonNull Context context) {
         return context.getString(status.getRes());
     }
 }

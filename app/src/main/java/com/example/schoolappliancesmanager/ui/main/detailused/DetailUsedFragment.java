@@ -8,8 +8,10 @@ import com.example.schoolappliancesmanager.R;
 import com.example.schoolappliancesmanager.databinding.FragmentDetaiUsedBinding;
 import com.example.schoolappliancesmanager.ui.base.BaseFragment;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
+@AndroidEntryPoint
 public class DetailUsedFragment extends BaseFragment<FragmentDetaiUsedBinding, DetailUsedViewModel> {
 
     @Override

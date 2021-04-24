@@ -3,7 +3,9 @@ package com.example.schoolappliancesmanager.model.database.domain;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,11 +16,33 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(tableName = "detail_used", primaryKeys = {"appliance_id", "room_id"})
-public class DetailUsed {
+@Entity(
+        tableName = "detail_used",
+        primaryKeys = {"appliance_id", "room_id", "date_used"},
+        foreignKeys = {
+                @ForeignKey(
+                        entity = Appliance.class,
+                        parentColumns = "appliance_id",
+                        childColumns = "appliance_id",
+                        onDelete = CASCADE,
+                        onUpdate = CASCADE
+                ),
+
+                @ForeignKey(
+                        entity = Room.class,
+                        parentColumns = "room_id",
+                        childColumns = "room_id",
+                        onDelete = CASCADE,
+                        onUpdate = CASCADE
+                )
+        }
+)
+public class DetailUsed implements Serializable {
     @ColumnInfo(name = "appliance_id")
     private long applianceId;
     @NonNull
@@ -27,7 +51,7 @@ public class DetailUsed {
     @ColumnInfo(name = "date_used")
     private long dateUsed;
     @ColumnInfo(name = "class_name")
-    private String className;
+    private String className = "";
 
     public long getApplianceId() {
         return applianceId;
@@ -65,7 +89,9 @@ public class DetailUsed {
     private Calendar calendar() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getDefault());
-        calendar.setTimeInMillis(dateUsed);
+        if(dateUsed != 0){
+            calendar.setTimeInMillis(dateUsed);
+        }
         return calendar;
     }
 

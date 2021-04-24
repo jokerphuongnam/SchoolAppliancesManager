@@ -11,12 +11,14 @@ import com.example.schoolappliancesmanager.databinding.FragmentRoomBinding;
 import com.example.schoolappliancesmanager.ui.add.AddActivity;
 import com.example.schoolappliancesmanager.ui.base.BaseFragment;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.TYPE_ACTION;
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.TYPE_UPDATE;
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.TypeUpdate.ROOM;
 
+@AndroidEntryPoint
 public class RoomFragment extends BaseFragment<FragmentRoomBinding, RoomViewModel> {
 
     @Override

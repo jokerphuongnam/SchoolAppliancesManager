@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.schoolappliancesmanager.databinding.ItemApplianceBinding;
 import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 public class ApplianceAdapter extends ListAdapter<Appliance, ApplianceAdapter.ViewHolder> {
 
     protected ApplianceAdapter() {
