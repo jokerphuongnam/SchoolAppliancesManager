@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SchoolAppliancesManager</string>
+    <string name="broken">Broken</string>
+    <string name="normal">Normal</string>
+    <string name="borrow">Borrow</string>
+    <string name="study">Study</string>
+    <string name="lab">Lab</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="rooms">Room list</string>
+    <string name="detail_used">Detail used list</string>
+    <string name="appliances">Appliance list</string>
+    <string name="exit">Exit</string>
+    <string name="appliance_name">Name:</string>
+    <string name="status">Status:</string>
+    <string name="room_name">Room name:</string>
+    <string name="date_used">Date used:</string>
+    <string name="class_name">Class name:</string>
+    <string name="room_type">Room type:</string>
+    <string name="add_image">Add image</string>
+    <string name="add_room_fragment">Room Fragment</string>
+    <string name="update_action">Update</string>
+    <string name="add_action">Add</string>
+    <string name="appliance">Appliance</string>
+    <string name="room">Room</string>
+    <string name="success">Success</string>
+</resources>
