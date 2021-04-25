@@ -7,6 +7,7 @@ import androidx.room.TypeConverters;
 import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
 import com.example.schoolappliancesmanager.model.database.domain.Room;
+import com.example.schoolappliancesmanager.util.EnumConverter;
 import com.example.schoolappliancesmanager.util.RoomConverter;
 import com.example.schoolappliancesmanager.util.RoomUtils;
 
@@ -18,7 +19,9 @@ import javax.inject.Singleton;
         entities = {Appliance.class, DetailUsed.class, Room.class},
         version = RoomUtils.DB_VERSION
 )
-//@TypeConverters(RoomConverter.class)
+@TypeConverters(EnumConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
-
+    public abstract ApplianceDao getApplianceDao();
+    public abstract DetailUsedDao getDetailUsedDao();
+    public abstract RoomDao getRoomDao();
 }

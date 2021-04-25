@@ -47,6 +47,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     daggerHilt()
 
@@ -62,25 +63,29 @@ repositories {
     mavenCentral()
 }
 
-private daggerHilt(){
+private void mediaStore(){
+
+}
+
+private void daggerHilt() {
     dependencies.implementation "com.google.dagger:hilt-android:$hilt_version"
     dependencies.annotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
 }
 
-private void lombok(){
+private void lombok() {
     def lombok_version = "1.18.20"
     dependencies.compileOnly "org.projectlombok:lombok:$lombok_version"
     dependencies.annotationProcessor "org.projectlombok:lombok:$lombok_version"
 }
 
-private void room(){
+private void room() {
     def room_version = "2.3.0-alpha04"
     dependencies.implementation "androidx.room:room-runtime:$room_version"
     dependencies.annotationProcessor "androidx.room:room-compiler:$room_version"
     dependencies.implementation "androidx.room:room-rxjava3:$room_version"
 }
 
-private void rxjava(){
+private void rxjava() {
     def rxjava_version = "3.0.0"
     dependencies.implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
 }

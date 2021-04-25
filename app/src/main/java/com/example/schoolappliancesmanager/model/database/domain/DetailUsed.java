@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
+import com.example.schoolappliancesmanager.util.DateUtil;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -100,12 +102,6 @@ public class DetailUsed implements Serializable {
     }
 
     public void setDateUsedString(String value) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        simpleDateFormat.setTimeZone(TimeZone.getDefault());
-        try {
-            dateUsed = simpleDateFormat.parse(value).getTime();
-        } catch (ParseException e) {
-            dateUsed = 0;
-        }
+        dateUsed = DateUtil.stringDateToLong(value);
     }
 }

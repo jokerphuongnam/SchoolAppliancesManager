@@ -6,7 +6,7 @@
         <item >@string/borrow</item>
     </string-array>
     <string-array name="room_type">
-        <item>@string/lab</item>
         <item>@string/study</item>
+        <item>@string/lab</item>
     </string-array>
 </resources>

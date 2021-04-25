@@ -1,23 +1,30 @@
 package com.example.schoolappliancesmanager.model.usecase;
 
 import com.example.schoolappliancesmanager.model.database.domain.Appliance;
+import com.example.schoolappliancesmanager.model.repository.ApplianceRepository;
 
 import javax.inject.Inject;
 
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DefaultAddApplianceUseCaseImpl implements AddApplianceUseCase {
 
-    @Inject
-    public DefaultAddApplianceUseCaseImpl(){}
+    private final ApplianceRepository repository;
 
-    @Override
-    public Single<Boolean> addAppliance(Appliance appliance) {
-        return  Single.just(true);
+    @Inject
+    public DefaultAddApplianceUseCaseImpl(ApplianceRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public Single<Boolean> editAppliance(Appliance appliance) {
-        return  Single.just(true);
+    public @NonNull Completable addAppliance(Appliance appliance) {
+        return  repository.insert(appliance).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public @NonNull Completable editAppliance(Appliance appliance) {
+        return  repository.update(appliance).subscribeOn(Schedulers.io());
     }
 }

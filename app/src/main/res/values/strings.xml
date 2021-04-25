@@ -29,4 +29,13 @@
     <string name="room_name_empty">Room name can\'t empty</string>
     <string name="appliance_name_empty" >Appliance name can\'t empty</string>
     <string name="class_name_empty" >Class name can\'t empty</string>
+    <string name="open_camera">Open camera</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="mess_when_click_back_btn">Press again to exit</string>
+    <string name="room_empty">Room is empty</string>
+    <string name="appliance_empty">Appliance empty</string>
+    <string name="appliance_borrowed">Appliance has been borrowed</string>
+    <string name="save_success">Save success</string>
+    <string name="group_nineteen">Group: 19th</string>
 </resources>

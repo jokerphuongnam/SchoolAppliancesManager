@@ -1,20 +1,23 @@
-package com.example.schoolappliancesmanager.model.database.local;
+package com.example.schoolappliancesmanager.model.repository;
 
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
 
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 
-public interface DetailUsedLocal {
+@Singleton
+public interface DetailUsedRepository {
     Flowable<List<DetailUsed>> getAllData();
+
+    Flowable<List<DetailUsed>> filter(long from, long to);
 
     Completable insert(DetailUsed detailUsed);
 
     Completable delete(DetailUsed detailUsed);
 
     Completable update(DetailUsed detailUsed);
-
-    Flowable<List<DetailUsed>> filter(long from, long to);
 }

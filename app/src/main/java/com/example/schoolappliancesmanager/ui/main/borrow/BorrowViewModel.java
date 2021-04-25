@@ -3,22 +3,29 @@ package com.example.schoolappliancesmanager.ui.main.borrow;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
+import com.example.schoolappliancesmanager.model.database.domain.Room;
 import com.example.schoolappliancesmanager.model.usecase.BorrowUseCase;
+import com.example.schoolappliancesmanager.ui.add.AddActivity;
+import com.example.schoolappliancesmanager.util.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 @HiltViewModel
 public class BorrowViewModel extends ViewModel {
 
-    private BorrowUseCase useCase;
+    private final BorrowUseCase useCase;
 
     @Inject
     public BorrowViewModel(BorrowUseCase useCase) {
@@ -28,65 +35,158 @@ public class BorrowViewModel extends ViewModel {
     private MutableLiveData<DetailUsed> detailUsedMutableLiveData;
 
     public MutableLiveData<DetailUsed> getDetailUsedMutableLiveData() {
-        if(detailUsedMutableLiveData == null){
+        if (detailUsedMutableLiveData == null) {
             detailUsedMutableLiveData = new MutableLiveData<>();
         }
         return detailUsedMutableLiveData;
     }
 
-    public void setData(DetailUsed detailUsed){
-        getDetailUsedMutableLiveData().postValue(detailUsed);
+    public void setData(DetailUsed detailUsed) {
+        if (getDetailUsedMutableLiveData().getValue() == null) {
+            getDetailUsedMutableLiveData().postValue(new DetailUsed());
+            typeAction = AddActivity.TypeAction.ADD;
+        } else {
+            getDetailUsedMutableLiveData().postValue(detailUsed);
+            typeAction = AddActivity.TypeAction.EDIT;
+        }
+    }
+//
+//    private Subscription applianceSubscription;
+//    private Subscription roomNameSubscription;
+
+    private final CompositeDisposable composite = new CompositeDisposable();
+
+    public void initApplianceAndRoomName() {
+        composite.add(useCase.getAppliances().subscribe(appliances -> getAppliances().postValue(appliances), Throwable::printStackTrace));
+        composite.add(useCase.getRoomNames().subscribe(roomNames -> getRooms().postValue(roomNames), Throwable::printStackTrace));
+//        useCase.getAppliances().subscribe(new FlowableSubscriber<List<Appliance>>() {
+//            @Override
+//            public void onSubscribe(@NonNull Subscription s) {
+//                applianceSubscription = s;
+//            }
+//
+//            @Override
+//            public void onNext(List<Appliance> appliances) {
+//                getAppliances().postValue(appliances);
+//            }
+//
+//            @Override
+//            public void onError(Throwable t) {
+//                t.printStackTrace();
+//                applianceSubscription.cancel();
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//                applianceSubscription.cancel();
+//            }
+//        });
+//        useCase.getRoomNames().subscribe(new FlowableSubscriber<List<String>>() {
+//            @Override
+//            public void onSubscribe(@NonNull Subscription s) {
+//                roomNameSubscription = s;
+//            }
+//
+//            @Override
+//            public void onNext(List<String> s) {
+//                Log.e("cccccccccc", s.toString());
+//                getRooms().postValue(s);
+//            }
+//
+//            @Override
+//            public void onError(Throwable t) {
+//                t.printStackTrace();
+//                roomNameSubscription.cancel();
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//                roomNameSubscription.cancel();
+//            }
+//        });
     }
 
-    public void initApplianceAndRoomName(){
+    private MutableLiveData<List<Appliance>> appliances;
+    private MutableLiveData<List<Room>> rooms;
 
-    }
-
-    private MutableLiveData<List<String>> appliances;
-    private MutableLiveData<List<String>> rooms;
-
-    public MutableLiveData<List<String>> getAppliances() {
-        if(appliances == null){
+    public MutableLiveData<List<Appliance>> getAppliances() {
+        if (appliances == null) {
             appliances = new MutableLiveData<>();
+            appliances.postValue(new ArrayList<>());
         }
         return appliances;
     }
 
-    public MutableLiveData<List<String>> getRooms() {
-        if(rooms == null){
+    public MutableLiveData<List<Room>> getRooms() {
+        if (rooms == null) {
             rooms = new MutableLiveData<>();
+            rooms.postValue(new ArrayList<>());
         }
         return rooms;
     }
 
-    private MutableLiveData<Boolean> success;
+    private MutableLiveData<Resource<Boolean>> success;
 
-    public MutableLiveData<Boolean> getSuccess() {
+    public MutableLiveData<Resource<Boolean>> getSuccess() {
         if (success == null) {
             success = new MutableLiveData<>();
         }
         return success;
     }
 
+    private CompletableObserver completableObserver;
+
+    private CompletableObserver getCompletableObserver() {
+        if (completableObserver == null) {
+            completableObserver = new CompletableObserver() {
+                private Disposable disposable;
+
+                @Override
+                public void onSubscribe(@NonNull Disposable d) {
+                    disposable = d;
+                    getSuccess().postValue(new Resource.Loading<>());
+                }
+
+                @Override
+                public void onComplete() {
+                    disposable.dispose();
+                    getSuccess().postValue(new Resource.Success<>(true));
+                }
+
+                @Override
+                public void onError(@NonNull Throwable e) {
+                    disposable.dispose();
+                    e.printStackTrace();
+                    getSuccess().postValue(new Resource.Error<>(""));
+                }
+            };
+        }
+        return completableObserver;
+    }
+
     public void borrow(DetailUsed detailUsed){
-        useCase.borrow(detailUsed).subscribe(new SingleObserver<Boolean>() {
-            private Disposable disposable;
+        useCase.borrow(detailUsed).subscribe(getCompletableObserver());
+    }
 
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                disposable = d;
-            }
+    public void edit(DetailUsed detailUsed) {
+        useCase.edit(detailUsed).subscribe(getCompletableObserver());
+    }
 
-            @Override
-            public void onSuccess(@NonNull Boolean aBoolean) {
-                disposable.dispose();
-                getSuccess().postValue(true);
-            }
+    private AddActivity.TypeAction typeAction;
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                disposable.dispose();
-            }
-        });
+    public AddActivity.TypeAction getTypeAction() {
+        return typeAction;
+    }
+
+    public void setTypeAction(AddActivity.TypeAction typeAction) {
+        this.typeAction = typeAction;
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        composite.dispose();
+//        applianceSubscription.cancel();
+//        roomNameSubscription.cancel();
     }
 }

@@ -18,6 +18,10 @@ public interface BaseUI<VB extends ViewDataBinding, VM extends ViewModel> {
         ).show();
     }
 
+    default void showToast(String message){
+        showToast(message, Toast.LENGTH_SHORT);
+    }
+
     void createView();
 
     VM setUpViewModel();

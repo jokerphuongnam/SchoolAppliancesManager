@@ -37,7 +37,7 @@ public class ApplianceFragment extends BaseFragment<FragmentApplianceBinding, Ap
     private ApplianceAdapter getAdapter() {
         if (adapter == null) {
             adapter = new ApplianceAdapter();
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
             binding.list.setLayoutManager(layoutManager);
         }
         return adapter;
@@ -80,5 +80,6 @@ public class ApplianceFragment extends BaseFragment<FragmentApplianceBinding, Ap
     public void onResume() {
         super.onResume();
         getSelectPublisher().onNext(0);
+        viewModel.initData();
     }
 }

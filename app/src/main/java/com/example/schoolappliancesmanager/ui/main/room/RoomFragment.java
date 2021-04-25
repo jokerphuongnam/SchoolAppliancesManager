@@ -37,7 +37,7 @@ public class RoomFragment extends BaseFragment<FragmentRoomBinding, RoomViewMode
     private RoomsAdapter getAdapter(){
         if(adapter == null){
             adapter = new RoomsAdapter();
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
             binding.list.setLayoutManager(layoutManager);
         }
         return adapter;
@@ -80,5 +80,6 @@ public class RoomFragment extends BaseFragment<FragmentRoomBinding, RoomViewMode
     public void onResume() {
         super.onResume();
         getSelectPublisher().onNext(0);
+        viewModel.initData();
     }
 }

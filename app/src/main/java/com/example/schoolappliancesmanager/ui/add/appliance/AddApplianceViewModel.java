@@ -5,18 +5,20 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 import com.example.schoolappliancesmanager.model.usecase.AddApplianceUseCase;
+import com.example.schoolappliancesmanager.util.Resource;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 @HiltViewModel
 public class AddApplianceViewModel extends ViewModel {
 
-    private AddApplianceUseCase useCase;
+    private final AddApplianceUseCase useCase;
 
     @Inject
     public AddApplianceViewModel(AddApplianceUseCase useCase) {
@@ -41,56 +43,50 @@ public class AddApplianceViewModel extends ViewModel {
         }
     }
 
-    private MutableLiveData<Boolean> success;
+    private MutableLiveData<Resource<Boolean>> success;
 
-    public MutableLiveData<Boolean> getSuccess() {
+    public MutableLiveData<Resource<Boolean>> getSuccess() {
         if (success == null) {
             success = new MutableLiveData<>();
         }
         return success;
     }
 
+    private CompletableObserver completableObserver;
+
+    private CompletableObserver getCompletableObserver() {
+        if (completableObserver == null) {
+            completableObserver = new CompletableObserver() {
+                private Disposable disposable;
+
+                @Override
+                public void onSubscribe(@NonNull Disposable d) {
+                    disposable = d;
+                    getSuccess().postValue(new Resource.Loading<>(true));
+                }
+
+                @Override
+                public void onComplete() {
+                    disposable.dispose();
+                    getSuccess().postValue(new Resource.Success<>(true));
+                }
+
+                @Override
+                public void onError(@NonNull Throwable e) {
+                    disposable.dispose();
+                    e.printStackTrace();
+                    getSuccess().postValue(new Resource.Error<>(""));
+                }
+            };
+        }
+        return completableObserver;
+    }
+
     public void addAppliance(Appliance appliance) {
-        useCase.addAppliance(appliance).subscribe(new SingleObserver<Boolean>() {
-            private Disposable disposable;
-
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                disposable = d;
-            }
-
-            @Override
-            public void onSuccess(@NonNull Boolean aBoolean) {
-                getSuccess().postValue(true);
-                disposable.dispose();
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                disposable.dispose();
-            }
-        });
+        useCase.addAppliance(appliance).subscribe(getCompletableObserver());
     }
 
     public void editAppliance(Appliance appliance) {
-        useCase.editAppliance(appliance).subscribe(new SingleObserver<Boolean>() {
-            private Disposable disposable;
-
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                disposable = d;
-            }
-
-            @Override
-            public void onSuccess(@NonNull Boolean aBoolean) {
-                getSuccess().postValue(true);
-                disposable.dispose();
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                disposable.dispose();
-            }
-        });
+        useCase.editAppliance(appliance).subscribe(getCompletableObserver());
     }
 }

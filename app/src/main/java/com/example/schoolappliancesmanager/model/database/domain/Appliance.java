@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity(tableName = "appliances")
 public class Appliance implements Serializable {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "appliance_id")
     private long applianceId;
     @ColumnInfo(name = "appliance_name")

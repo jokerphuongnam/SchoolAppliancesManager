@@ -1,5 +1,6 @@
 package com.example.schoolappliancesmanager.ui.base;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
+
+import java.util.Calendar;
 
 public abstract class BaseFragment<VB extends ViewDataBinding, VM extends ViewModel> extends Fragment implements BaseUI<VB, VM> {
     @LayoutRes
@@ -39,6 +42,22 @@ public abstract class BaseFragment<VB extends ViewDataBinding, VM extends ViewMo
         super.onViewCreated(view, savedInstanceState);
         viewModel = setUpViewModel();
         createView();
+    }
+
+    protected DatePickerDialog.OnDateSetListener getDatePickerCallBack(){
+        return null;
+    }
+
+    @NonNull
+    protected DatePickerDialog getDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        return new DatePickerDialog(
+                getContext(),
+                getDatePickerCallBack(),
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
     }
 
     @Override

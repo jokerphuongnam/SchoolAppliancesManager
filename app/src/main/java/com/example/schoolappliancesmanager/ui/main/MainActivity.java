@@ -103,12 +103,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -176,6 +170,24 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             composite.add(subscribe);
         }
         return applianceFragment;
+    }
+
+    private long clickFirstTime = 0;
+
+    protected void twiceTimeToExit() {
+        if (clickFirstTime == 0L) {
+            clickFirstTime = System.currentTimeMillis();
+            showToast(getString(R.string.mess_when_click_back_btn));
+        } else {
+            if (System.currentTimeMillis() - clickFirstTime < 2000L) {
+                finishAffinity();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        twiceTimeToExit();
     }
 
     @Override

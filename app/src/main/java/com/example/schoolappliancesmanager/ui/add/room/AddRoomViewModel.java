@@ -11,16 +11,14 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 @HiltViewModel
 public class AddRoomViewModel extends ViewModel {
 
-    private AddRoomViewModel() {
-    }
-
-    private AddRoomUseCase useCase;
+    private final AddRoomUseCase useCase;
 
     @Inject
     public AddRoomViewModel(AddRoomUseCase useCase) {
@@ -67,67 +65,64 @@ public class AddRoomViewModel extends ViewModel {
             @Override
             public void onSuccess(@NonNull Boolean aBoolean) {
                 disposable.dispose();
-                getCheckRoomName().postValue(new Resource.Success<>(aBoolean));
+                if (aBoolean) {
+                    getCheckRoomName().postValue(new Resource.Error<>(""));
+                } else {
+                    getCheckRoomName().postValue(new Resource.Success<>(aBoolean));
+                }
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 disposable.dispose();
-                getCheckRoomName().postValue(new Resource.Error<>(""));
             }
         });
     }
 
-    private MutableLiveData<Boolean> success;
+    private MutableLiveData<Resource<Boolean>> success;
 
-    public MutableLiveData<Boolean> getSuccess() {
+    public MutableLiveData<Resource<Boolean>> getSuccess() {
         if (success == null) {
             success = new MutableLiveData<>();
         }
         return success;
     }
 
+    private CompletableObserver completableObserver;
+
+    private CompletableObserver getCompletableObserver() {
+        if (completableObserver == null) {
+            completableObserver = new CompletableObserver() {
+                private Disposable disposable;
+
+                @Override
+                public void onSubscribe(@NonNull Disposable d) {
+                    disposable = d;
+                    getSuccess().postValue(new Resource.Loading<>(true));
+                }
+
+                @Override
+                public void onComplete() {
+                    disposable.dispose();
+                    getSuccess().postValue(new Resource.Success<>(true));
+                }
+
+                @Override
+                public void onError(@NonNull Throwable e) {
+                    disposable.dispose();
+                    e.printStackTrace();
+                    getSuccess().postValue(new Resource.Error<>(""));
+                }
+            };
+        }
+        return completableObserver;
+    }
+
     public void addRoom(Room room) {
-        useCase.addRoom(room).subscribe(new SingleObserver<Boolean>() {
-            private Disposable disposable;
-
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                disposable = d;
-            }
-
-            @Override
-            public void onSuccess(@NonNull Boolean aBoolean) {
-                disposable.dispose();
-                getSuccess().postValue(true);
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                disposable.dispose();
-            }
-        });
+        useCase.addRoom(room).subscribe(getCompletableObserver());
     }
 
     public void editRoom(Room room) {
-        useCase.editRoom(room).subscribe(new SingleObserver<Boolean>() {
-            private Disposable disposable;
-
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                disposable = d;
-            }
-
-            @Override
-            public void onSuccess(@NonNull Boolean aBoolean) {
-                disposable.dispose();
-                getSuccess().postValue(true);
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                disposable.dispose();
-            }
-        });
+        useCase.editRoom(room).subscribe(getCompletableObserver());
     }
 }

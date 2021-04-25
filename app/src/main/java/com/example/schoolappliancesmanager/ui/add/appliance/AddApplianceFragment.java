@@ -2,7 +2,6 @@ package com.example.schoolappliancesmanager.ui.add.appliance;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -72,6 +71,9 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
             intent.setType("image/*");
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             imageChoose.launch(intent);
+        });
+        binding.openCamera.setOnClickListener((v) -> {
+
         });
         binding.deleteImage.setOnClickListener((v) -> {
             binding.imageLayout.setDisplayedChild(0);

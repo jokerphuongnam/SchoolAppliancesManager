@@ -4,10 +4,11 @@ import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 
 import javax.inject.Singleton;
 
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
 
 @Singleton
 public interface AddApplianceUseCase {
-    Single<Boolean> addAppliance(Appliance appliance);
-    Single<Boolean> editAppliance(Appliance appliance);
+    @NonNull Completable addAppliance(Appliance appliance);
+    @NonNull Completable editAppliance(Appliance appliance);
 }

@@ -1,20 +1,18 @@
-package com.example.schoolappliancesmanager.model.database.local;
+package com.example.schoolappliancesmanager.model.repository;
 
 import com.example.schoolappliancesmanager.model.database.domain.Room;
 
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
-public interface RoomLocal {
+@Singleton
+public interface RoomRepository {
     Flowable<List<Room>> getAllData();
-
-    /**
-     * for test data
-     * */
-    List<Room> getAll();
 
     Completable insert(Room room);
 

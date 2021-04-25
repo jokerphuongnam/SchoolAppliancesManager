@@ -9,140 +9,144 @@
             type="com.example.schoolappliancesmanager.model.database.domain.DetailUsed" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:fillViewport="true">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:animateLayoutChanges="true"
+           android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_margin="16dp"
-            android:padding="16dp">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:gravity="center"
+               android:layout_margin="16dp"
+               android:padding="16dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="@string/appliance_name" />
+               <TextView
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="3"
+                   android:gravity="center"
+                   android:text="@string/appliance_name" />
 
-            <Spinner
-                android:id="@+id/appliance_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="7" />
-        </LinearLayout>
+               <Spinner
+                   android:id="@+id/appliance_spinner"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="7" />
+           </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="16dp"
-            android:layout_margin="16dp">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:gravity="center"
+               android:padding="16dp"
+               android:layout_margin="16dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="@string/room_name" />
+               <TextView
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="3"
+                   android:gravity="center"
+                   android:text="@string/room_name" />
 
-            <Spinner
-                android:id="@+id/room_spinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="7" />
-        </LinearLayout>
+               <Spinner
+                   android:id="@+id/room_spinner"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="7" />
+           </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_margin="16dp"
-            android:padding="16dp">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:gravity="center"
+               android:layout_margin="16dp"
+               android:padding="16dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="@string/date_used" />
+               <TextView
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="3"
+                   android:gravity="center"
+                   android:text="@string/date_used" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:orientation="horizontal">
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="7"
+                   android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/date_used"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:enabled="false"
-                    android:gravity="center|start"
-                    android:inputType="text"
-                    android:text="@={detail_used.dateUsedString}"
-                    android:textColor="?attr/blackWhite"
-                    android:textColorHighlight="?attr/greyColor" />
+                   <EditText
+                       android:id="@+id/date_used"
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="1"
+                       android:background="@android:color/transparent"
+                       android:enabled="false"
+                       android:gravity="center|start"
+                       android:inputType="text"
+                       android:text="@={detail_used.dateUsedString}"
+                       android:textColor="?attr/blackWhite"
+                       android:textColorHighlight="?attr/greyColor" />
 
-                <ImageButton
-                    android:id="@+id/calendar_choose"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:tint="?attr/blackWhite"
-                    app:backgroundTint="@android:color/transparent"
-                    app:srcCompat="@drawable/ic_calendar" />
-            </LinearLayout>
-        </LinearLayout>
+                   <ImageButton
+                       android:id="@+id/calendar_choose"
+                       android:layout_width="36dp"
+                       android:layout_height="36dp"
+                       android:tint="?attr/blackWhite"
+                       app:backgroundTint="@android:color/transparent"
+                       app:srcCompat="@drawable/ic_calendar" />
+               </LinearLayout>
+           </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:padding="16dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="16dp"
+               android:padding="16dp"
+               android:gravity="center"
+               android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="@string/class_name" />
+               <TextView
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="3"
+                   android:gravity="center"
+                   android:text="@string/class_name" />
 
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:backgroundTint="@android:color/transparent"
-                android:inputType="text"
-                android:text="@={detail_used.className}" />
-        </LinearLayout>
+               <EditText
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="7"
+                   android:backgroundTint="@android:color/transparent"
+                   android:inputType="text"
+                   android:text="@={detail_used.className}" />
+           </LinearLayout>
 
-        <TextView
-            android:id="@+id/class_name_error"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:gravity="center"
-            android:text="@string/class_name_empty"
-            android:textColor="#FF0000"
-            android:visibility="gone" />
+           <TextView
+               android:id="@+id/borrow_error"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="16dp"
+               android:gravity="center"
+               android:textColor="#FF0000"
+               android:visibility="gone" />
 
-        <Button
-            android:id="@+id/borrow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/borrow"
-            android:textAllCaps="false" />
-    </LinearLayout>
+           <Button
+               android:id="@+id/borrow"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="16dp"
+               android:text="@string/borrow"
+               android:textAllCaps="false" />
+       </LinearLayout>
+   </ScrollView>
 </layout>
