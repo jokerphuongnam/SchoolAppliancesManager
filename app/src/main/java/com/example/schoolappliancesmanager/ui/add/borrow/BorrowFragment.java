@@ -1,7 +1,6 @@
-package com.example.schoolappliancesmanager.ui.main.borrow;
+package com.example.schoolappliancesmanager.ui.add.borrow;
 
 import android.app.DatePickerDialog;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -12,6 +11,7 @@ import com.example.schoolappliancesmanager.databinding.FragmentBorrowBinding;
 import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
 import com.example.schoolappliancesmanager.model.database.domain.Room;
+import com.example.schoolappliancesmanager.ui.add.AddViewModel;
 import com.example.schoolappliancesmanager.ui.base.BaseFragment;
 import com.example.schoolappliancesmanager.util.Resource;
 
@@ -33,6 +33,12 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
         return new ViewModelProvider(this).get(BorrowViewModel.class);
     }
 
+    private AddViewModel activityViewModel;
+
+    private void setUpActivityViewModel() {
+        activityViewModel = new ViewModelProvider(requireActivity()).get(AddViewModel.class);
+    }
+
     public BorrowFragment() {
         super(R.layout.fragment_borrow);
     }
@@ -48,9 +54,9 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
                 calendar.set(Calendar.MONTH, monthOfYear);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                DetailUsed detailUsed = viewModel.getDetailUsedMutableLiveData().getValue();
+                DetailUsed detailUsed = viewModel.getDetailUsed();
                 detailUsed.setDateUsed(calendar.getTimeInMillis());
-                viewModel.getDetailUsedMutableLiveData().postValue(detailUsed);
+                binding.setDetailUsed(detailUsed);
             };
         }
         return datePickerCallBack;
@@ -63,7 +69,7 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
         } else {
             appliances = viewModel.getAppliances().getValue().stream().map(Appliance::getApplianceName).collect(Collectors.toList());
         }
-        return new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, appliances);
+        return new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, appliances);
     }
 
     public ArrayAdapter<String> getRoomAdapter() {
@@ -73,7 +79,7 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
         } else {
             rooms = viewModel.getRooms().getValue().stream().map(Room::getRoomName).collect(Collectors.toList());
         }
-        return new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, rooms);
+        return new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, rooms);
     }
 
     private void initAdapterSpinner() {
@@ -82,30 +88,21 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
     }
 
     private void initData() {
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            boolean hasData = arguments.getSerializable(DATA) == null;
-            binding.roomSpinner.setEnabled(hasData);
-            binding.applianceSpinner.setEnabled(hasData);
-            viewModel.setData((DetailUsed) arguments.getSerializable(DATA));
-        } else {
-            viewModel.setData(null);
-            binding.roomSpinner.setEnabled(true);
-            binding.applianceSpinner.setEnabled(true);
-        }
+        viewModel.initData((DetailUsed) getActivity().getIntent().getSerializableExtra(DATA));
+        binding.setDetailUsed(viewModel.getDetailUsed());
+        binding.roomSpinner.setEnabled(!getActivity().getIntent().hasExtra(DATA));
+        binding.applianceSpinner.setEnabled(!getActivity().getIntent().hasExtra(DATA));
     }
 
     @Override
     public void createView() {
         initAdapterSpinner();
+        setUpActivityViewModel();
         binding.calendarChoose.setOnClickListener((v -> {
             getDatePicker().show();
         }));
         initData();
         viewModel.initApplianceAndRoomName();
-        viewModel.getDetailUsedMutableLiveData().observe(getViewLifecycleOwner(), detailUsed -> {
-            binding.setDetailUsed(detailUsed);
-        });
         viewModel.getAppliances().observe(getViewLifecycleOwner(), (appliances) -> {
             getApplianceAdapter().notifyDataSetChanged();
             binding.applianceSpinner.setAdapter(getApplianceAdapter());
@@ -118,6 +115,7 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
             if (resource instanceof Resource.Loading) {
                 binding.borrowError.setVisibility(View.GONE);
             } else if (resource instanceof Resource.Success) {
+                getActivity().finish();
                 showToast(getString(R.string.save_success));
             } else if (resource instanceof Resource.Error) {
                 binding.borrowError.setText(R.string.appliance_borrowed);
@@ -138,7 +136,7 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
                     binding.borrowError.setVisibility(View.GONE);
                     detailUsed.setApplianceId(viewModel.getAppliances().getValue().get(binding.applianceSpinner.getSelectedItemPosition()).getApplianceId());
                     detailUsed.setRoomName(viewModel.getRooms().getValue().get(binding.roomSpinner.getSelectedItemPosition()).getRoomName());
-                    switch (viewModel.getTypeAction()) {
+                    switch (activityViewModel.getTypeAction()) {
                         case EDIT:
                             viewModel.edit(detailUsed);
                             break;

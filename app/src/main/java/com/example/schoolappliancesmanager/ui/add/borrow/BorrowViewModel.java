@@ -1,4 +1,4 @@
-package com.example.schoolappliancesmanager.ui.main.borrow;
+package com.example.schoolappliancesmanager.ui.add.borrow;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.CompletableObserver;
-import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -32,78 +31,29 @@ public class BorrowViewModel extends ViewModel {
         this.useCase = useCase;
     }
 
-    private MutableLiveData<DetailUsed> detailUsedMutableLiveData;
-
-    public MutableLiveData<DetailUsed> getDetailUsedMutableLiveData() {
-        if (detailUsedMutableLiveData == null) {
-            detailUsedMutableLiveData = new MutableLiveData<>();
-        }
-        return detailUsedMutableLiveData;
+    public DetailUsed getDetailUsed() {
+        return detailUsed;
     }
 
-    public void setData(DetailUsed detailUsed) {
-        if (getDetailUsedMutableLiveData().getValue() == null) {
-            getDetailUsedMutableLiveData().postValue(new DetailUsed());
-            typeAction = AddActivity.TypeAction.ADD;
+    public void setDetailUsed(DetailUsed detailUsed) {
+        this.detailUsed = detailUsed;
+    }
+
+    private DetailUsed detailUsed;
+
+    public void initData(DetailUsed detailUsed) {
+        if (detailUsed == null) {
+            this.detailUsed = new DetailUsed();
         } else {
-            getDetailUsedMutableLiveData().postValue(detailUsed);
-            typeAction = AddActivity.TypeAction.EDIT;
+            this.detailUsed = detailUsed;
         }
     }
-//
-//    private Subscription applianceSubscription;
-//    private Subscription roomNameSubscription;
 
     private final CompositeDisposable composite = new CompositeDisposable();
 
     public void initApplianceAndRoomName() {
         composite.add(useCase.getAppliances().subscribe(appliances -> getAppliances().postValue(appliances), Throwable::printStackTrace));
         composite.add(useCase.getRoomNames().subscribe(roomNames -> getRooms().postValue(roomNames), Throwable::printStackTrace));
-//        useCase.getAppliances().subscribe(new FlowableSubscriber<List<Appliance>>() {
-//            @Override
-//            public void onSubscribe(@NonNull Subscription s) {
-//                applianceSubscription = s;
-//            }
-//
-//            @Override
-//            public void onNext(List<Appliance> appliances) {
-//                getAppliances().postValue(appliances);
-//            }
-//
-//            @Override
-//            public void onError(Throwable t) {
-//                t.printStackTrace();
-//                applianceSubscription.cancel();
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//                applianceSubscription.cancel();
-//            }
-//        });
-//        useCase.getRoomNames().subscribe(new FlowableSubscriber<List<String>>() {
-//            @Override
-//            public void onSubscribe(@NonNull Subscription s) {
-//                roomNameSubscription = s;
-//            }
-//
-//            @Override
-//            public void onNext(List<String> s) {
-//                Log.e("cccccccccc", s.toString());
-//                getRooms().postValue(s);
-//            }
-//
-//            @Override
-//            public void onError(Throwable t) {
-//                t.printStackTrace();
-//                roomNameSubscription.cancel();
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//                roomNameSubscription.cancel();
-//            }
-//        });
     }
 
     private MutableLiveData<List<Appliance>> appliances;
@@ -164,22 +114,12 @@ public class BorrowViewModel extends ViewModel {
         return completableObserver;
     }
 
-    public void borrow(DetailUsed detailUsed){
+    public void borrow(DetailUsed detailUsed) {
         useCase.borrow(detailUsed).subscribe(getCompletableObserver());
     }
 
     public void edit(DetailUsed detailUsed) {
         useCase.edit(detailUsed).subscribe(getCompletableObserver());
-    }
-
-    private AddActivity.TypeAction typeAction;
-
-    public AddActivity.TypeAction getTypeAction() {
-        return typeAction;
-    }
-
-    public void setTypeAction(AddActivity.TypeAction typeAction) {
-        this.typeAction = typeAction;
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.example.schoolappliancesmanager.model.database.local.AppDatabase;
 import com.example.schoolappliancesmanager.model.database.local.ApplianceLocal;
 import com.example.schoolappliancesmanager.model.database.local.DetailUsedLocal;
 import com.example.schoolappliancesmanager.model.database.local.RoomLocal;
+import com.google.gson.Gson;
 
 import javax.inject.Singleton;
 
@@ -44,5 +45,11 @@ public class AppProvidesModules {
     @Singleton
     RoomLocal providerRoomLocal(AppDatabase appDatabase) {
         return appDatabase.getRoomDao();
+    }
+
+    @Provides
+    @Singleton
+    Gson providerGson(){
+        return new Gson();
     }
 }

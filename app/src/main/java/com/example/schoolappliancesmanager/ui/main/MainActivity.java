@@ -3,7 +3,6 @@ package com.example.schoolappliancesmanager.ui.main;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import com.example.schoolappliancesmanager.databinding.ActivityMainBinding;
 import com.example.schoolappliancesmanager.databinding.LayoutHeaderDrawerBinding;
 import com.example.schoolappliancesmanager.ui.base.BaseActivity;
 import com.example.schoolappliancesmanager.ui.main.appliance.ApplianceFragment;
-import com.example.schoolappliancesmanager.ui.main.borrow.BorrowFragment;
 import com.example.schoolappliancesmanager.ui.main.detailused.DetailUsedFragment;
 import com.example.schoolappliancesmanager.ui.main.room.RoomFragment;
 
@@ -58,22 +56,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         actionBar = getSupportActionBar();
         assert actionBar != null;
         backButton();
-        openFragment(getBorrowFragment(), getResources().getString(R.string.borrow));
+        openFragment(getDetailUsedFragment(), getResources().getString(R.string.detail_used));
         drawerToggle = new ActionBarDrawerToggle(this, binding.activityMainDrawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.activityMainDrawer.addDrawerListener(drawerToggle);
         binding.navView.setNavigationItemSelectedListener((item) -> {
             switch (item.getItemId()) {
-                case R.id.borrow:
-                    openFragment(getBorrowFragment(), getResources().getString(R.string.borrow));
-                    break;
-                case R.id.rooms:
-                    openFragment(getRoomFragment(), getResources().getString(R.string.rooms));
+                case R.id.appliances:
+                    openFragment(getApplianceFragment(), getResources().getString(R.string.appliances));
                     break;
                 case R.id.detailUsed:
                     openFragment(getDetailUsedFragment(), getResources().getString(R.string.detail_used));
                     break;
-                case R.id.appliances:
-                    openFragment(getApplianceFragment(), getResources().getString(R.string.appliances));
+                case R.id.rooms:
+                    openFragment(getRoomFragment(), getResources().getString(R.string.rooms));
                     break;
                 case R.id.exit:
                     finishAffinity();
@@ -111,9 +106,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         return super.onOptionsItemSelected(item);
     }
 
-    private BorrowFragment borrowFragment = null;
-    private RoomFragment roomFragment = null;
     private DetailUsedFragment detailUsedFragment = null;
+    private RoomFragment roomFragment = null;
     private ApplianceFragment applianceFragment = null;
     private final CompositeDisposable composite = new CompositeDisposable();
 
@@ -121,18 +115,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         binding.navView.getMenu().getItem(0).setChecked(index == 0);
         binding.navView.getMenu().getItem(1).setChecked(index == 1);
         binding.navView.getMenu().getItem(2).setChecked(index == 2);
-        binding.navView.getMenu().getItem(3).setChecked(index == 3);
     }
 
-    private BorrowFragment getBorrowFragment() {
-        if (borrowFragment == null) {
-            borrowFragment = new BorrowFragment();
-            Disposable subscribe = borrowFragment.getSelectPublisher().subscribe(integer -> {
+    private DetailUsedFragment getDetailUsedFragment() {
+        if (detailUsedFragment == null) {
+            detailUsedFragment = new DetailUsedFragment();
+            Disposable selectDisposable = detailUsedFragment.getSelectPublisher().subscribe(integer -> {
                 setSelectedMenu(0);
             });
-            composite.add(subscribe);
+            composite.add(selectDisposable);
         }
-        return borrowFragment;
+        return detailUsedFragment;
     }
 
     private RoomFragment getRoomFragment() {
@@ -146,26 +139,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         return roomFragment;
     }
 
-    private DetailUsedFragment getDetailUsedFragment() {
-        if (detailUsedFragment == null) {
-            detailUsedFragment = new DetailUsedFragment();
-            Disposable selectDisposable = detailUsedFragment.getSelectPublisher().subscribe(integer -> {
-                setSelectedMenu(2);
-            });
-            composite.add(selectDisposable);
-            Disposable addClickDisposable = detailUsedFragment.getAddPublisher().subscribe(integer -> {
-                openFragment(getBorrowFragment(), getString(R.string.borrow));
-            });
-            composite.add(addClickDisposable);
-        }
-        return detailUsedFragment;
-    }
-
     private ApplianceFragment getApplianceFragment() {
         if (applianceFragment == null) {
             applianceFragment = new ApplianceFragment();
             Disposable subscribe = applianceFragment.getSelectPublisher().subscribe(integer -> {
-                setSelectedMenu(3);
+                setSelectedMenu(2);
             });
             composite.add(subscribe);
         }
@@ -199,8 +177,4 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public static final String TYPE_UPDATE = "TYPE_UPDATE";
     public static final String TYPE_ACTION = "TYPE_ACTION";
     public static final String DATA = "DATA";
-
-    public enum TypeUpdate {
-        APPLIANCE, ROOM
-    }
 }

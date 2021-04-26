@@ -8,16 +8,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.schoolappliancesmanager.R;
 import com.example.schoolappliancesmanager.databinding.FragmentApplianceBinding;
+import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 import com.example.schoolappliancesmanager.ui.add.AddActivity;
 import com.example.schoolappliancesmanager.ui.base.BaseFragment;
+import com.example.schoolappliancesmanager.util.ItemClickRecycler;
+import com.example.schoolappliancesmanager.util.Resource;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
-import static com.example.schoolappliancesmanager.ui.main.MainActivity.TYPE_ACTION;
+import static com.example.schoolappliancesmanager.ui.add.AddActivity.TypeUpdate.APPLIANCE;
+import static com.example.schoolappliancesmanager.ui.main.MainActivity.DATA;
 import static com.example.schoolappliancesmanager.ui.main.MainActivity.TYPE_UPDATE;
-import static com.example.schoolappliancesmanager.ui.main.MainActivity.TypeUpdate.APPLIANCE;
 
 @AndroidEntryPoint
 public class ApplianceFragment extends BaseFragment<FragmentApplianceBinding, ApplianceViewModel> {
@@ -36,9 +38,19 @@ public class ApplianceFragment extends BaseFragment<FragmentApplianceBinding, Ap
     @NonNull
     private ApplianceAdapter getAdapter() {
         if (adapter == null) {
-            adapter = new ApplianceAdapter();
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-            binding.list.setLayoutManager(layoutManager);
+            adapter = new ApplianceAdapter(new ItemClickRecycler<Appliance>() {
+                @Override
+                public void delete(Appliance item) {
+                    viewModel.deleteAppliance(item);
+                }
+
+                @Override
+                public void edit(Appliance item) {
+                    Intent intent = getIntent();
+                    intent.putExtra(DATA, item);
+                    startActivity(intent);
+                }
+            });
         }
         return adapter;
     }
@@ -57,12 +69,19 @@ public class ApplianceFragment extends BaseFragment<FragmentApplianceBinding, Ap
     @Override
     public void createView() {
         binding.list.setAdapter(getAdapter());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        binding.list.setLayoutManager(layoutManager);
         viewModel.getData().observe(getViewLifecycleOwner(), appliances -> {
             getAdapter().submitList(appliances);
         });
+        viewModel.getSuccess().observe(getViewLifecycleOwner(), resource -> {
+            if (resource instanceof Resource.Success) {
+                showToast(getString(R.string.delete_compelete));
+            }
+        });
         binding.addBtn.setOnClickListener((v) -> {
             Intent intent = getIntent();
-            intent.removeExtra(TYPE_ACTION);
+            intent.removeExtra(DATA);
             startActivity(intent);
         });
     }

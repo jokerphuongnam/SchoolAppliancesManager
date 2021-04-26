@@ -29,6 +29,8 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
         return new ViewModelProvider(this).get(AddApplianceViewModel.class);
     }
 
+    private AddViewModel activityViewModel;
+
     private void setUpActivityViewModel() {
         activityViewModel = new ViewModelProvider(requireActivity()).get(AddViewModel.class);
     }
@@ -43,7 +45,7 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
     public void createView() {
         setUpActivityViewModel();
         binding.imageLayout.setMeasureAllChildren(false);
-        viewModel.initAppliance(getActivity().getIntent().getExtras().getParcelable(DATA));
+        viewModel.initAppliance((Appliance) getActivity().getIntent().getSerializableExtra(DATA));
         viewModel.getSuccess().observe(getViewLifecycleOwner(), (success) -> {
             getActivity().finish();
         });
@@ -79,6 +81,4 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
             binding.imageLayout.setDisplayedChild(0);
         });
     }
-
-    private AddViewModel activityViewModel;
 }

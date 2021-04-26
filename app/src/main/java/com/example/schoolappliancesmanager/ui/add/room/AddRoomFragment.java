@@ -11,6 +11,8 @@ import com.example.schoolappliancesmanager.ui.add.AddViewModel;
 import com.example.schoolappliancesmanager.ui.base.BaseFragment;
 import com.example.schoolappliancesmanager.util.Resource;
 
+import java.io.Serializable;
+
 import dagger.hilt.android.AndroidEntryPoint;
 
 import static com.example.schoolappliancesmanager.ui.add.AddActivity.TypeAction.EDIT;
@@ -31,10 +33,15 @@ public class AddRoomFragment extends BaseFragment<FragmentAddRoomBinding, AddRoo
         activityViewModel = new ViewModelProvider(requireActivity()).get(AddViewModel.class);
     }
 
+    private void initData(){
+        viewModel.initRoom((Room) getActivity().getIntent().getSerializableExtra(DATA));
+        binding.setRoom(viewModel.getRoom());
+    }
+
     @Override
     public void createView() {
         setUpActivityLayout();
-        viewModel.initRoom(getActivity().getIntent().getExtras().getParcelable(DATA));
+        initData();
         viewModel.getCheckRoomName().observe(getViewLifecycleOwner(), (resource) -> {
             if (resource instanceof Resource.Loading) {
                 binding.roomNameError.setVisibility(View.GONE);
@@ -49,7 +56,6 @@ public class AddRoomFragment extends BaseFragment<FragmentAddRoomBinding, AddRoo
             getActivity().finish();
         });
         binding.roomName.setEnabled(activityViewModel.getTypeAction() != EDIT);
-        binding.setRoom(viewModel.getRoom());
         binding.success.setOnClickListener((v -> {
             Room room = binding.getRoom();
             int index = binding.spinner.getSelectedItemPosition();

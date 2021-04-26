@@ -8,7 +8,6 @@ import androidx.room.ForeignKey;
 import com.example.schoolappliancesmanager.util.DateUtil;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;

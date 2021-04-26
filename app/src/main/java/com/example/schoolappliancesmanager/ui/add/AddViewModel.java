@@ -2,8 +2,6 @@ package com.example.schoolappliancesmanager.ui.add;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.schoolappliancesmanager.ui.main.MainActivity;
-
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -15,13 +13,13 @@ public class AddViewModel extends ViewModel {
     public AddViewModel() {
     }
 
-    private MainActivity.TypeUpdate typeUpdate;
+    private AddActivity.TypeUpdate typeUpdate;
 
-    public MainActivity.TypeUpdate getTypeUpdate() {
+    public AddActivity.TypeUpdate getTypeUpdate() {
         return typeUpdate;
     }
 
-    public void setTypeUpdate(MainActivity.TypeUpdate typeUpdate) {
+    public void setTypeUpdate(AddActivity.TypeUpdate typeUpdate) {
         this.typeUpdate = typeUpdate;
     }
 
