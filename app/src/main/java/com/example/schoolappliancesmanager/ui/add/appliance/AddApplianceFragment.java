@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -19,10 +16,6 @@ import com.example.schoolappliancesmanager.databinding.FragmentAddApplianceBindi
 import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 import com.example.schoolappliancesmanager.ui.add.AddViewModel;
 import com.example.schoolappliancesmanager.ui.base.BaseFragment;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Calendar;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -72,6 +65,11 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
         viewModel.getSuccess().observe(getViewLifecycleOwner(), (success) -> {
             getActivity().finish();
         });
+        if (!viewModel.getAppliance().getDirImage().isEmpty()) {
+            binding.imageLayout.setDisplayedChild(1);
+            Uri uri =  Uri.parse(viewModel.getAppliance().getDirImage());
+            binding.image.setImageURI(uri);
+        }
         binding.setAppliance(viewModel.getAppliance());
         binding.success.setOnClickListener((v) -> {
             if (binding.getAppliance().getApplianceName().isEmpty()) {
