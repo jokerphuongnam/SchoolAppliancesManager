@@ -2,6 +2,12 @@ package com.example.schoolappliancesmanager.ui.add.appliance;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -13,6 +19,10 @@ import com.example.schoolappliancesmanager.databinding.FragmentAddApplianceBindi
 import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 import com.example.schoolappliancesmanager.ui.add.AddViewModel;
 import com.example.schoolappliancesmanager.ui.base.BaseFragment;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Calendar;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -37,6 +47,19 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
 
     private final ActivityResultLauncher<Intent> imageChoose = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (result) -> {
         if (result.getResultCode() == Activity.RESULT_OK) {
+            Uri selectedImageUri = result.getData().getData();
+            String path = selectedImageUri.toString();
+            binding.getAppliance().setDirImage(path);
+            binding.image.setImageURI(selectedImageUri);
+            binding.imageLayout.setDisplayedChild(1);
+        }
+    });
+
+    private final ActivityResultLauncher<Intent> takePhotoFromCamera = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (result) -> {
+        if (result.getResultCode() == Activity.RESULT_OK) {
+            Bundle extras = result.getData().getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            binding.image.setImageBitmap(imageBitmap);
             binding.imageLayout.setDisplayedChild(1);
         }
     });
@@ -54,6 +77,13 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
             if (binding.getAppliance().getApplianceName().isEmpty()) {
                 binding.applianceNameError.setVisibility(View.VISIBLE);
             } else {
+//                if (binding.imageLayout.getDisplayedChild() == 1) {
+//                    if (binding.getAppliance().getDirImage() == null || binding.getAppliance().getDirImage().isEmpty()) {
+//                        binding.image.buildDrawingCache();
+//                        Bitmap bitmap = binding.image.getDrawingCache();
+//                        binding.getAppliance().setDirImage(saveImage(bitmap));
+//                    }
+//                }
                 binding.applianceNameError.setVisibility(View.GONE);
                 Appliance appliance = binding.getAppliance();
                 int index = binding.spinner.getSelectedItemPosition();
@@ -74,11 +104,32 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             imageChoose.launch(intent);
         });
-        binding.openCamera.setOnClickListener((v) -> {
-
-        });
+//        binding.openCamera.setOnClickListener((v) -> {
+//            takePhotoFromCamera.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE));
+//        });
         binding.deleteImage.setOnClickListener((v) -> {
+            binding.getAppliance().setDirImage("");
             binding.imageLayout.setDisplayedChild(0);
         });
     }
+
+//    private String saveImage(Bitmap bitmap) {
+//        String root = Environment.getExternalStorageDirectory().toString();
+//        File myDir = new File(root + "/saved_images");
+//        myDir.mkdirs();
+//        Calendar current = Calendar.getInstance();
+//        String filename = "Image-" + current.getTimeInMillis() + ".jpg";
+//        File file = new File(myDir, filename);
+//        if (file.exists()) file.delete();
+//        try {
+//            FileOutputStream out = new FileOutputStream(file);
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+//            out.flush();
+//            out.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return Uri.fromFile(file).toString();
+//    }
+
 }

@@ -29,7 +29,7 @@ public class Appliance implements Serializable {
     @ColumnInfo(name = "appliance_name")
     private String applianceName = "";
     @ColumnInfo(name = "dir_image")
-    private String dirImage = null;
+    private String dirImage = "";
     @ColumnInfo(name = "status")
     private Status status;
 
