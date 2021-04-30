@@ -26,98 +26,90 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-<!--                <FrameLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_marginEnd="64dp"-->
-<!--                    android:layout_marginStart="64dp"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:background="@drawable/doter">-->
 
-<!--                    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
-<!--                        android:id="@+id/open_camera"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@drawable/ripple"-->
-<!--                        android:clickable="true"-->
-<!--                        android:focusable="true">-->
-
-
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="match_parent"-->
-<!--                            android:layout_gravity="center">-->
-
-<!--                            <ImageButton-->
-<!--                                android:layout_width="36dp"-->
-<!--                                android:layout_height="36dp"-->
-<!--                                android:background="@android:color/transparent"-->
-<!--                                android:drawableLeft="@drawable/ic_add"-->
-<!--                                android:gravity="center"-->
-<!--                                android:padding="8dp"-->
-<!--                                android:scaleType="fitCenter"-->
-<!--                                android:adjustViewBounds="true"-->
-<!--                                android:tint="?attr/blackWhite"-->
-<!--                                app:elevation="0dp"-->
-<!--                                app:rippleColor="@android:color/transparent"-->
-<!--                                app:srcCompat="@drawable/ic_photo_camera" />-->
-
-<!--                            <TextView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:gravity="center"-->
-<!--                                android:text="@string/open_camera"-->
-<!--                                android:textColor="?attr/blackWhite"-->
-<!--                                android:textSize="18sp" />-->
-<!--                        </LinearLayout>-->
-<!--                    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
-<!--                </FrameLayout>-->
-
-                <FrameLayout
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:id="@+id/open_camera"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="64dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/doter">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <ImageButton
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:adjustViewBounds="true"
+                            android:background="@android:color/transparent"
+                            android:drawableLeft="@drawable/ic_add"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:scaleType="fitCenter"
+                            android:tint="?attr/blackWhite"
+                            app:elevation="0dp"
+                            app:rippleColor="@android:color/transparent"
+                            app:srcCompat="@drawable/ic_photo_camera" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="@string/open_camera"
+                            android:textColor="?attr/blackWhite"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:id="@+id/add_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="64dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="64dp"
-                    android:background="@drawable/doter">
+                    android:background="@drawable/doter"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple">
 
-                    <androidx.coordinatorlayout.widget.CoordinatorLayout
-                        android:id="@+id/add_image"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/ripple"
-                        android:clickable="true"
-                        android:focusable="true">
+                        android:layout_gravity="center">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
+                        <ImageButton
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:adjustViewBounds="true"
+                            android:background="@android:color/transparent"
+                            android:drawableLeft="@drawable/ic_add"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:scaleType="fitCenter"
+                            android:tint="?attr/blackWhite"
+                            app:elevation="0dp"
+                            app:rippleColor="@android:color/transparent"
+                            app:srcCompat="@drawable/ic_add" />
+
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center">
-
-                            <ImageButton
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:background="@android:color/transparent"
-                                android:drawableLeft="@drawable/ic_add"
-                                android:gravity="center"
-                                android:padding="8dp"
-                                android:scaleType="fitCenter"
-                                android:adjustViewBounds="true"
-                                android:tint="?attr/blackWhite"
-                                app:elevation="0dp"
-                                app:rippleColor="@android:color/transparent"
-                                app:srcCompat="@drawable/ic_add" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="@string/add_image"
-                                android:textColor="?attr/blackWhite"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-                    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-                </FrameLayout>
+                            android:gravity="center"
+                            android:text="@string/add_image"
+                            android:textColor="?attr/blackWhite"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
             </LinearLayout>
 
             <LinearLayout

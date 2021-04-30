@@ -7,7 +7,6 @@ import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
 import com.example.schoolappliancesmanager.model.database.domain.Room;
 import com.example.schoolappliancesmanager.model.usecase.BorrowUseCase;
-import com.example.schoolappliancesmanager.ui.add.AddActivity;
 import com.example.schoolappliancesmanager.util.Resource;
 
 import java.util.ArrayList;
