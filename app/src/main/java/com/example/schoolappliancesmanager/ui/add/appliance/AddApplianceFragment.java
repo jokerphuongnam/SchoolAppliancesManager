@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -28,7 +27,6 @@ import com.example.schoolappliancesmanager.ui.base.BaseFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,7 +67,6 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
             binding.imageLayout.setDisplayedChild(1);
             image = selectedImageUri;
             isChange = true;
-            Log.e("ccccccccccccccccc", binding.getAppliance().toString());
         }
     });
 
@@ -177,7 +174,6 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
             }
         }
         File file = new File(requireActivity().getFilesDir(), name);
-        Log.e("ccccccccccccccccccccc", String.valueOf(file.exists()));
         return Uri.fromFile(file);
     }
 
