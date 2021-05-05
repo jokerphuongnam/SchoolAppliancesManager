@@ -36,6 +36,7 @@ public class AddRoomFragment extends BaseFragment<FragmentAddRoomBinding, AddRoo
     private void initData(){
         viewModel.initRoom((Room) getActivity().getIntent().getSerializableExtra(DATA));
         binding.setRoom(viewModel.getRoom());
+        binding.spinner.setSelection(viewModel.getRoom().getType().ordinal());
     }
 
     @Override

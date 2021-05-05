@@ -62,14 +62,14 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
         return datePickerCallBack;
     }
 
-    public ArrayAdapter<String> getApplianceAdapter() {
-        List<String> appliances;
+    public ArrayAdapter<Appliance> getApplianceAdapter() {
+        List<Appliance> appliances;
         if (viewModel.getAppliances().getValue() == null || viewModel.getAppliances().getValue().isEmpty()) {
             appliances = new ArrayList<>();
         } else {
-            appliances = viewModel.getAppliances().getValue().stream().map(Appliance::getApplianceName).collect(Collectors.toList());
+            appliances = viewModel.getAppliances().getValue();
         }
-        return new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, appliances);
+        return new ApplianceSpinnerAdapter(getContext(), appliances);
     }
 
     public ArrayAdapter<String> getRoomAdapter() {

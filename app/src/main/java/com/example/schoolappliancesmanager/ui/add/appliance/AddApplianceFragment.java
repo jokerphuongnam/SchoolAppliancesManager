@@ -81,11 +81,16 @@ public class AddApplianceFragment extends BaseFragment<FragmentAddApplianceBindi
         }
     });
 
+    private void initData(){
+        viewModel.initAppliance((Appliance) getActivity().getIntent().getSerializableExtra(DATA));
+        binding.spinner.setSelection(viewModel.getAppliance().getStatus().ordinal());
+    }
+
     @Override
     public void createView() {
         setUpActivityViewModel();
         binding.imageLayout.setMeasureAllChildren(false);
-        viewModel.initAppliance((Appliance) getActivity().getIntent().getSerializableExtra(DATA));
+        initData();
         viewModel.getSuccess().observe(getViewLifecycleOwner(), (success) -> {
             getActivity().finish();
         });
