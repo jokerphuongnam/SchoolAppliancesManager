@@ -25,8 +25,8 @@ public class DefaultApplianceRepositoryImpl implements ApplianceRepository {
     }
 
     @Override
-    public Flowable<List<Appliance>> getNormalData() {
-        return local.getNormalData().subscribeOn(Schedulers.io());
+    public Flowable<List<Appliance>> getAppliancesName(int applianceId) {
+        return local.getAppliancesName(applianceId).subscribeOn(Schedulers.io());
     }
 
     @Override

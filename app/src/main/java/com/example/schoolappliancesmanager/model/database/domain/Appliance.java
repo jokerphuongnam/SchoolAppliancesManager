@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class Appliance implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "appliance_id")
-    private long applianceId;
+    private int applianceId = -1;
     @ColumnInfo(name = "appliance_name")
     private String applianceName = "";
     @ColumnInfo(name = "dir_image")
@@ -50,7 +50,8 @@ public class Appliance implements Serializable {
             return res;
         }
 
-        public static List<String> toList(Context context) {
+        @NonNull
+        public static List<String> toList(@NonNull Context context) {
             List<String> list = new ArrayList<>();
             list.add(context.getString(BROKEN.getRes()));
             list.add(context.getString(NORMAL.getRes()));
@@ -65,11 +66,11 @@ public class Appliance implements Serializable {
         this.status = status;
     }
 
-    public long getApplianceId() {
+    public int getApplianceId() {
         return applianceId;
     }
 
-    public void setApplianceId(long applianceId) {
+    public void setApplianceId(int applianceId) {
         this.applianceId = applianceId;
     }
 

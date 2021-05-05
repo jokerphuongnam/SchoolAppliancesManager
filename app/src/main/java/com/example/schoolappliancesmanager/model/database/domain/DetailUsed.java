@@ -45,7 +45,7 @@ import static androidx.room.ForeignKey.CASCADE;
 )
 public class DetailUsed implements Serializable {
     @ColumnInfo(name = "appliance_id")
-    private long applianceId;
+    private int applianceId = -1;
     @NonNull
     @ColumnInfo(name = "room_id")
     private String roomName;
@@ -54,11 +54,11 @@ public class DetailUsed implements Serializable {
     @ColumnInfo(name = "class_name")
     private String className = "";
 
-    public long getApplianceId() {
+    public int getApplianceId() {
         return applianceId;
     }
 
-    public void setApplianceId(long applianceId) {
+    public void setApplianceId(int applianceId) {
         this.applianceId = applianceId;
     }
 

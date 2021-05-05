@@ -27,9 +27,15 @@ public interface ApplianceDao extends ApplianceLocal {
     Flowable<List<Appliance>> getNormalData(int normal);
 
     @Override
-    default Flowable<List<Appliance>> getNormalData() {
-        return getNormalData(Appliance.Status.NORMAL.ordinal());
+    default Flowable<List<Appliance>> getAppliancesName(int applianceId) {
+        if(applianceId == -1){
+            return getNormalData(Appliance.Status.NORMAL.ordinal());
+        }
+        return getApplianceNameById(applianceId);
     }
+
+    @Query("SELECT * FROM APPLIANCES WHERE appliance_id = :applianceId")
+    Flowable<List<Appliance>> getApplianceNameById(int applianceId);
 
     @Insert
     @Override

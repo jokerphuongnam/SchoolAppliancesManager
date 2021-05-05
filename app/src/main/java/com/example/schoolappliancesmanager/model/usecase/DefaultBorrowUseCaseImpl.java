@@ -7,9 +7,7 @@ import com.example.schoolappliancesmanager.model.repository.ApplianceRepository;
 import com.example.schoolappliancesmanager.model.repository.DetailUsedRepository;
 import com.example.schoolappliancesmanager.model.repository.RoomRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -41,8 +39,8 @@ public class DefaultBorrowUseCaseImpl implements BorrowUseCase {
     }
 
     @Override
-    public Flowable<List<Appliance>> getAppliances() {
-        return applianceRepository.getNormalData().subscribeOn(Schedulers.io());
+    public Flowable<List<Appliance>> getAppliances(int applianceId) {
+        return applianceRepository.getAppliancesName(applianceId).subscribeOn(Schedulers.io());
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface ApplianceLocal {
      * */
     List<Appliance> getAll();
 
-    Flowable<List<Appliance>> getNormalData();
+    Flowable<List<Appliance>> getAppliancesName(int applianceId);
 
     Completable insert(Appliance appliance);
 

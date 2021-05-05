@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.core.Flowable;
 public interface ApplianceRepository {
     Flowable<List<Appliance>> getAllData();
 
-    Flowable<List<Appliance>> getNormalData();
+    Flowable<List<Appliance>> getAppliancesName(int applianceId);
 
     Completable insert(Appliance appliance);
 

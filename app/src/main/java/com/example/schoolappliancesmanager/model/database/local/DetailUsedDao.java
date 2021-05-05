@@ -23,7 +23,7 @@ public interface DetailUsedDao extends DetailUsedLocal {
     @Override
     Completable insert(DetailUsed detailUsed);
 
-    @Update
+    @Delete
     @Override
     Completable delete(DetailUsed detailUsed);
 

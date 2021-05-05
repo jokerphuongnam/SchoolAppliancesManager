@@ -51,7 +51,7 @@ public class BorrowViewModel extends ViewModel {
     private final CompositeDisposable composite = new CompositeDisposable();
 
     public void initApplianceAndRoomName() {
-        composite.add(useCase.getAppliances().subscribe(appliances -> getAppliances().postValue(appliances), Throwable::printStackTrace));
+        composite.add(useCase.getAppliances(detailUsed.getApplianceId()).subscribe(appliances -> getAppliances().postValue(appliances), Throwable::printStackTrace));
         composite.add(useCase.getRoomNames().subscribe(roomNames -> getRooms().postValue(roomNames), Throwable::printStackTrace));
     }
 

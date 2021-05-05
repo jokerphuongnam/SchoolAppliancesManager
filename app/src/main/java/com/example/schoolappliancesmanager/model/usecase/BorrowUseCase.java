@@ -17,7 +17,7 @@ public interface BorrowUseCase {
 
     Completable edit(DetailUsed detailUsed);
 
-    Flowable<List<Appliance>> getAppliances();
+    Flowable<List<Appliance>> getAppliances(int applianceId);
 
     Flowable<List<Room>> getRoomNames();
 }
