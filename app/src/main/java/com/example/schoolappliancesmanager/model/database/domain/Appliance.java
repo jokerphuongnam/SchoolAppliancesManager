@@ -25,13 +25,13 @@ import lombok.NoArgsConstructor;
 public class Appliance implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "appliance_id")
-    private int applianceId = -1;
+    private int applianceId;
     @ColumnInfo(name = "appliance_name")
     private String applianceName = "";
     @ColumnInfo(name = "dir_image")
     private String dirImage = "";
     @ColumnInfo(name = "status")
-    private Status status;
+    private Status status = Status.BROKEN;
 
     public enum Status {
         BROKEN(R.string.broken),

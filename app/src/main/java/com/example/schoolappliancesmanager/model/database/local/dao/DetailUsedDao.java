@@ -1,4 +1,4 @@
-package com.example.schoolappliancesmanager.model.database.local;
+package com.example.schoolappliancesmanager.model.database.local.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
+import com.example.schoolappliancesmanager.model.database.local.DetailUsedLocal;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface DetailUsedDao extends DetailUsedLocal {
     @Override
     Completable delete(DetailUsed detailUsed);
 
-    @Delete
+    @Update
     @Override
     Completable update(DetailUsed detailUsed);
 

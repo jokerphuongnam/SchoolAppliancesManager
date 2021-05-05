@@ -30,7 +30,11 @@ public class DefaultBorrowUseCaseImpl implements BorrowUseCase {
 
     @Override
     public Completable borrow(DetailUsed detailUsed) {
-        return detailUsedRepository.insert(detailUsed);
+        return detailUsedRepository.insert(detailUsed).andThen(applianceRepository.getApplianceNameById(detailUsed.getApplianceId()).flatMapCompletable(appliances -> {
+            Appliance appliance = appliances.get(0);
+            appliance.setStatus(Appliance.Status.BORROW);
+            return applianceRepository.update(appliance);
+        })).subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -45,6 +49,6 @@ public class DefaultBorrowUseCaseImpl implements BorrowUseCase {
 
     @Override
     public Flowable<List<Room>> getRoomNames() {
-        return roomRepository.getAllData();
+        return roomRepository.getAllData().subscribeOn(Schedulers.io());
     }
 }

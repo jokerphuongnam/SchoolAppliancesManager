@@ -1,4 +1,4 @@
-package com.example.schoolappliancesmanager.model.database.local;
+package com.example.schoolappliancesmanager.model.database.local.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,11 +7,13 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.schoolappliancesmanager.model.database.domain.Appliance;
+import com.example.schoolappliancesmanager.model.database.local.ApplianceLocal;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface ApplianceDao extends ApplianceLocal {
@@ -31,11 +33,12 @@ public interface ApplianceDao extends ApplianceLocal {
         if(applianceId == -1){
             return getNormalData(Appliance.Status.NORMAL.ordinal());
         }
-        return getApplianceNameById(applianceId);
+        return getApplianceNameById(applianceId).toFlowable();
     }
 
     @Query("SELECT * FROM APPLIANCES WHERE appliance_id = :applianceId")
-    Flowable<List<Appliance>> getApplianceNameById(int applianceId);
+    @Override
+    Single<List<Appliance>> getApplianceNameById(int applianceId);
 
     @Insert
     @Override

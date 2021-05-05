@@ -7,8 +7,10 @@ import androidx.room.TypeConverters;
 import com.example.schoolappliancesmanager.model.database.domain.Appliance;
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
 import com.example.schoolappliancesmanager.model.database.domain.Room;
+import com.example.schoolappliancesmanager.model.database.local.dao.ApplianceDao;
+import com.example.schoolappliancesmanager.model.database.local.dao.DetailUsedDao;
+import com.example.schoolappliancesmanager.model.database.local.dao.RoomDao;
 import com.example.schoolappliancesmanager.util.EnumConverter;
-import com.example.schoolappliancesmanager.util.RoomConverter;
 import com.example.schoolappliancesmanager.util.RoomUtils;
 
 import javax.inject.Singleton;

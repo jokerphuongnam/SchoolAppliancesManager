@@ -28,7 +28,7 @@ public class Room implements Serializable {
     @NonNull
     private String roomName = "";
     @ColumnInfo(name = "type")
-    private RoomType type;
+    private RoomType type = RoomType.STUDY;
 
     public enum RoomType {
         STUDY(R.string.study),

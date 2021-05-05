@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DefaultApplianceRepositoryImpl implements ApplianceRepository {
@@ -27,6 +28,11 @@ public class DefaultApplianceRepositoryImpl implements ApplianceRepository {
     @Override
     public Flowable<List<Appliance>> getAppliancesName(int applianceId) {
         return local.getAppliancesName(applianceId).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Single<List<Appliance>> getApplianceNameById(int applianceId) {
+        return local.getApplianceNameById(applianceId);
     }
 
     @Override

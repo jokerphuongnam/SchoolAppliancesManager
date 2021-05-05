@@ -1,4 +1,4 @@
-package com.example.schoolappliancesmanager.model.database.local;
+package com.example.schoolappliancesmanager.model.database.local.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.schoolappliancesmanager.model.database.domain.Room;
+import com.example.schoolappliancesmanager.model.database.local.RoomLocal;
 
 import java.util.List;
 

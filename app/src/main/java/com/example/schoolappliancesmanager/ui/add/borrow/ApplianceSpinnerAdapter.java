@@ -22,13 +22,18 @@ public class ApplianceSpinnerAdapter extends ArrayAdapter<Appliance> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ItemApplianceSpinnerBinding binding = ItemApplianceSpinnerBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        binding.setAppliance((Appliance) getItem(position));
-        return binding.getRoot();
+        return initView(position, parent);
     }
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return super.getDropDownView(position, convertView, parent);
+        return initView(position, parent);
+    }
+
+    @NonNull
+    private View initView(int position, @NonNull ViewGroup parent){
+        ItemApplianceSpinnerBinding binding = ItemApplianceSpinnerBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        binding.setAppliance((Appliance) getItem(position));
+        return binding.getRoot();
     }
 }
