@@ -1,7 +1,8 @@
-package com.example.schoolappliancesmanager.model.usecase;
+package com.example.schoolappliancesmanager.model.usecase.Impl;
 
 import com.example.schoolappliancesmanager.model.database.domain.Room;
 import com.example.schoolappliancesmanager.model.repository.RoomRepository;
+import com.example.schoolappliancesmanager.model.usecase.RoomsUseCase;
 
 import java.util.List;
 

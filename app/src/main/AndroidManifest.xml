@@ -20,6 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolAppliancesManager">
         <activity android:name=".ui.add.AddActivity" />
+        <activity android:name=".ui.chart.StatisticalChartActivity" />
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

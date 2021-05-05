@@ -53,6 +53,8 @@ public class DetailUsed implements Serializable {
     private long dateUsed;
     @ColumnInfo(name = "class_name")
     private String className = "";
+    @ColumnInfo(name = "returned_time")
+    private long returnTime = 0;
 
     public int getApplianceId() {
         return applianceId;
@@ -86,21 +88,43 @@ public class DetailUsed implements Serializable {
         this.className = className;
     }
 
+    public long getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(long returnTime) {
+        this.returnTime = returnTime;
+    }
+
     @NonNull
-    private Calendar calendar() {
+    private Calendar calendarBorrow() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getDefault());
-        if(dateUsed != 0){
+        if (dateUsed != 0) {
             calendar.setTimeInMillis(dateUsed);
         }
         return calendar;
     }
 
+    @NonNull
+    private Calendar calendarReturned() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getDefault());
+        if (returnTime != 0) {
+            calendar.setTimeInMillis(returnTime);
+        }
+        return calendar;
+    }
+
     public String getDateUsedString() {
-        return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar().getTime());
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendarBorrow().getTime());
     }
 
     public void setDateUsedString(String value) {
         dateUsed = DateUtil.stringDateToLong(value);
+    }
+
+    public String getReturnTimeString() {
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendarReturned().getTime());
     }
 }

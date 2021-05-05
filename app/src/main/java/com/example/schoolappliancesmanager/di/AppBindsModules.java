@@ -1,21 +1,25 @@
 package com.example.schoolappliancesmanager.di;
 
 import com.example.schoolappliancesmanager.model.repository.ApplianceRepository;
-import com.example.schoolappliancesmanager.model.repository.DefaultApplianceRepositoryImpl;
-import com.example.schoolappliancesmanager.model.repository.DefaultDetailUsedRepositoryImpl;
-import com.example.schoolappliancesmanager.model.repository.DefaultRoomRepositoryImpl;
+import com.example.schoolappliancesmanager.model.repository.Impl.DefaultApplianceRepositoryImpl;
+import com.example.schoolappliancesmanager.model.repository.Impl.DefaultDetailUsedRepositoryImpl;
+import com.example.schoolappliancesmanager.model.repository.Impl.DefaultRoomRepositoryImpl;
 import com.example.schoolappliancesmanager.model.repository.DetailUsedRepository;
 import com.example.schoolappliancesmanager.model.repository.RoomRepository;
 import com.example.schoolappliancesmanager.model.usecase.AddApplianceUseCase;
 import com.example.schoolappliancesmanager.model.usecase.AddRoomUseCase;
+import com.example.schoolappliancesmanager.model.usecase.ApplianceStatisticalChartUseCase;
+import com.example.schoolappliancesmanager.model.usecase.ApplianceStatisticalUseCase;
 import com.example.schoolappliancesmanager.model.usecase.AppliancesUseCase;
 import com.example.schoolappliancesmanager.model.usecase.BorrowUseCase;
-import com.example.schoolappliancesmanager.model.usecase.DefaultAddApplianceUseCaseImpl;
-import com.example.schoolappliancesmanager.model.usecase.DefaultAddRoomUseCaseImpl;
-import com.example.schoolappliancesmanager.model.usecase.DefaultAppliancesUseCaseImpl;
-import com.example.schoolappliancesmanager.model.usecase.DefaultBorrowUseCaseImpl;
-import com.example.schoolappliancesmanager.model.usecase.DefaultDetailUsedUseCaseImpl;
-import com.example.schoolappliancesmanager.model.usecase.DefaultRoomsUseCaseImpl;
+import com.example.schoolappliancesmanager.model.usecase.Impl.DefaultAddApplianceUseCaseImpl;
+import com.example.schoolappliancesmanager.model.usecase.Impl.DefaultAddRoomUseCaseImpl;
+import com.example.schoolappliancesmanager.model.usecase.Impl.DefaultApplianceApplianceStatisticalChartUseCaseImpl;
+import com.example.schoolappliancesmanager.model.usecase.Impl.DefaultApplianceApplianceStatisticalUseCaseImpl;
+import com.example.schoolappliancesmanager.model.usecase.Impl.DefaultAppliancesUseCaseImpl;
+import com.example.schoolappliancesmanager.model.usecase.Impl.DefaultBorrowUseCaseImpl;
+import com.example.schoolappliancesmanager.model.usecase.Impl.DefaultDetailUsedUseCaseImpl;
+import com.example.schoolappliancesmanager.model.usecase.Impl.DefaultRoomsUseCaseImpl;
 import com.example.schoolappliancesmanager.model.usecase.DetailUsedUseCase;
 import com.example.schoolappliancesmanager.model.usecase.RoomsUseCase;
 
@@ -45,4 +49,8 @@ public abstract class AppBindsModules {
     abstract DetailUsedUseCase getDetailUsedUseCase(DefaultDetailUsedUseCaseImpl useCase);
     @Binds
     abstract RoomsUseCase getRoomsUseCase(DefaultRoomsUseCaseImpl useCase);
+    @Binds
+    abstract ApplianceStatisticalUseCase getStatisticalUseCase(DefaultApplianceApplianceStatisticalUseCaseImpl useCase);
+    @Binds
+    abstract ApplianceStatisticalChartUseCase getApplianceStatisticalChartUseCase(DefaultApplianceApplianceStatisticalChartUseCaseImpl useCase);
 }

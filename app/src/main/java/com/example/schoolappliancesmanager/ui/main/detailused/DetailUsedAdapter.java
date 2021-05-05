@@ -18,16 +18,18 @@ import com.example.schoolappliancesmanager.util.ItemClickRecycler;
 public class DetailUsedAdapter extends ListAdapter<DetailUsed, DetailUsedAdapter.ViewHolder> {
 
     private final ItemClickRecycler<DetailUsed> itemClickRecycler;
+    private final ReturnCallback returnCallback;
 
-    public DetailUsedAdapter(ItemClickRecycler<DetailUsed> itemClickRecycler) {
+    public DetailUsedAdapter(ItemClickRecycler<DetailUsed> itemClickRecycler, ReturnCallback returnCallback) {
         super(getDiffCallback());
         this.itemClickRecycler = itemClickRecycler;
+        this.returnCallback = returnCallback;
     }
 
     @NonNull
     @Override
     public DetailUsedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return ViewHolder.create(parent, viewType, itemClickRecycler);
+        return ViewHolder.create(parent, viewType, itemClickRecycler, returnCallback);
     }
 
     @Override
@@ -41,12 +43,14 @@ public class DetailUsedAdapter extends ListAdapter<DetailUsed, DetailUsedAdapter
         private final ItemDetailUsedBinding binding;
         private final ItemClickRecycler<DetailUsed> itemClickRecycler;
         private final Context context;
+        private final ReturnCallback returnCallback;
 
-        public ViewHolder(@NonNull ItemDetailUsedBinding binding, ItemClickRecycler<DetailUsed> itemClickRecycler, Context context) {
+        public ViewHolder(@NonNull ItemDetailUsedBinding binding, ItemClickRecycler<DetailUsed> itemClickRecycler, Context context, ReturnCallback returnCallback) {
             super(binding.getRoot());
             this.binding = binding;
             this.itemClickRecycler = itemClickRecycler;
             this.context = context;
+            this.returnCallback = returnCallback;
         }
 
         public void bind(DetailUsed detailUsed) {
@@ -62,7 +66,7 @@ public class DetailUsedAdapter extends ListAdapter<DetailUsed, DetailUsedAdapter
                     switch (menu.getItemId()){
                         case R.id.edit:
                             itemClickRecycler.edit(detailUsed);
-                        break;
+                            break;
                         case R.id.delete:
                             itemClickRecycler.delete(detailUsed);
                     }
@@ -71,11 +75,14 @@ public class DetailUsedAdapter extends ListAdapter<DetailUsed, DetailUsedAdapter
                 popupMenu.show();
                 return true;
             });
+            binding.returnBtn.setOnClickListener((v) -> {
+                returnCallback.action(detailUsed);
+            });
         }
 
         @NonNull
-        static ViewHolder create(@NonNull ViewGroup parent, int viewType, ItemClickRecycler<DetailUsed> itemClickRecycler) {
-            return new ViewHolder(ItemDetailUsedBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false), itemClickRecycler, parent.getContext());
+        static ViewHolder create(@NonNull ViewGroup parent, int viewType, ItemClickRecycler<DetailUsed> itemClickRecycler, ReturnCallback returnCallback) {
+            return new ViewHolder(ItemDetailUsedBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false), itemClickRecycler, parent.getContext(), returnCallback);
         }
     }
 
@@ -96,5 +103,9 @@ public class DetailUsedAdapter extends ListAdapter<DetailUsed, DetailUsedAdapter
             };
         }
         return diffCallback;
+    }
+
+    public interface ReturnCallback {
+        void action(DetailUsed detailUsed);
     }
 }

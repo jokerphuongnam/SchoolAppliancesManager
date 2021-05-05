@@ -1,7 +1,9 @@
-package com.example.schoolappliancesmanager.model.repository;
+package com.example.schoolappliancesmanager.model.repository.Impl;
 
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
+import com.example.schoolappliancesmanager.model.database.domain.supportquery.ApplianceStatisticalByMonthTuple;
 import com.example.schoolappliancesmanager.model.database.local.DetailUsedLocal;
+import com.example.schoolappliancesmanager.model.repository.DetailUsedRepository;
 
 import java.util.List;
 
@@ -42,5 +44,10 @@ public class DefaultDetailUsedRepositoryImpl implements DetailUsedRepository {
     @Override
     public Completable update(DetailUsed detailUsed) {
         return local.update(detailUsed).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Flowable<List<ApplianceStatisticalByMonthTuple>> statisticalAppliancesByMonth(Long from, Long to) {
+        return local.statisticalAppliancesByMonth(from, to);
     }
 }

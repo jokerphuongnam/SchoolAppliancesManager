@@ -19,6 +19,7 @@ import com.example.schoolappliancesmanager.ui.base.BaseActivity;
 import com.example.schoolappliancesmanager.ui.main.appliance.ApplianceFragment;
 import com.example.schoolappliancesmanager.ui.main.detailused.DetailUsedFragment;
 import com.example.schoolappliancesmanager.ui.main.room.RoomFragment;
+import com.example.schoolappliancesmanager.ui.main.statistical.StatisticalFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -70,6 +71,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 case R.id.rooms:
                     openFragment(getRoomFragment(), getResources().getString(R.string.rooms));
                     break;
+                case R.id.appliance_statistical:
+                    openFragment(getStatisticalFragment(), getString(R.string.appliance_statistical));
+                    break;
                 case R.id.exit:
                     finishAffinity();
                     break;
@@ -109,12 +113,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private DetailUsedFragment detailUsedFragment = null;
     private RoomFragment roomFragment = null;
     private ApplianceFragment applianceFragment = null;
+    private StatisticalFragment statisticalFragment = null;
     private final CompositeDisposable composite = new CompositeDisposable();
 
     private void setSelectedMenu(int index) {
         binding.navView.getMenu().getItem(0).setChecked(index == 0);
         binding.navView.getMenu().getItem(1).setChecked(index == 1);
         binding.navView.getMenu().getItem(2).setChecked(index == 2);
+        binding.navView.getMenu().getItem(3).setChecked(index == 3);
     }
 
     private DetailUsedFragment getDetailUsedFragment() {
@@ -148,6 +154,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             composite.add(subscribe);
         }
         return applianceFragment;
+    }
+
+    public StatisticalFragment getStatisticalFragment() {
+        if(statisticalFragment == null){
+            statisticalFragment = new StatisticalFragment();
+            Disposable subscribe = statisticalFragment.getSelectPublisher().subscribe(integer -> {
+                setSelectedMenu(3);
+            });
+            composite.add(subscribe);
+        }
+        return statisticalFragment;
     }
 
     private long clickFirstTime = 0;

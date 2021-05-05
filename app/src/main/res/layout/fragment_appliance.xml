@@ -23,6 +23,7 @@
             android:layout_margin="32dp"
             android:clickable="true"
             app:backgroundTint="?android:attr/colorPrimary"
-            app:srcCompat="@drawable/ic_add" />
+            app:srcCompat="@drawable/ic_add"
+            app:tint="?attr/whiteBlack" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

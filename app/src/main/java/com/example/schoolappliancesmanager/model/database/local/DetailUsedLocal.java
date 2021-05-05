@@ -1,6 +1,7 @@
 package com.example.schoolappliancesmanager.model.database.local;
 
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
+import com.example.schoolappliancesmanager.model.database.domain.supportquery.ApplianceStatisticalByMonthTuple;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface DetailUsedLocal {
     Completable update(DetailUsed detailUsed);
 
     Flowable<List<DetailUsed>> filter(long from, long to);
+
+    Flowable<List<ApplianceStatisticalByMonthTuple>> statisticalAppliancesByMonth(Long from, Long to);
 }

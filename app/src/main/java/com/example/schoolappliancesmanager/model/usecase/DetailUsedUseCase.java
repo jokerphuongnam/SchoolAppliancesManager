@@ -16,4 +16,6 @@ public interface DetailUsedUseCase {
     Flowable<List<DetailUsed>> filter(long from, long to);
 
     Completable deleteDetailUsed(DetailUsed detailUsed);
+
+    Completable returnAppliance(DetailUsed detailUsed);
 }

@@ -76,7 +76,7 @@ public class ApplianceFragment extends BaseFragment<FragmentApplianceBinding, Ap
         });
         viewModel.getSuccess().observe(getViewLifecycleOwner(), resource -> {
             if (resource instanceof Resource.Success) {
-                showToast(getString(R.string.delete_compelete));
+                showToast(getString(R.string.delete_complete));
             }
         });
         binding.addBtn.setOnClickListener((v) -> {

@@ -1,8 +1,12 @@
-package com.example.schoolappliancesmanager.model.usecase;
+package com.example.schoolappliancesmanager.model.usecase.Impl;
+
+import androidx.annotation.NonNull;
 
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
 import com.example.schoolappliancesmanager.model.repository.DetailUsedRepository;
+import com.example.schoolappliancesmanager.model.usecase.DetailUsedUseCase;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,5 +37,11 @@ public class DefaultDetailUsedUseCaseImpl implements DetailUsedUseCase {
     @Override
     public Completable deleteDetailUsed(DetailUsed detailUsed) {
         return repository.delete(detailUsed).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Completable returnAppliance(@NonNull DetailUsed detailUsed) {
+        detailUsed.setReturnTime(Calendar.getInstance().getTimeInMillis());
+        return repository.update(detailUsed);
     }
 }

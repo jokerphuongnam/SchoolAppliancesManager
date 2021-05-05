@@ -5,5 +5,6 @@
     <item android:title="@string/detail_used" android:id="@+id/detailUsed"/>
     <item android:title="@string/rooms" android:id="@+id/rooms"/>
     <item android:title="@string/appliances" android:id="@+id/appliances"/>
+    <item android:title="@string/appliance_statistical" android:id="@+id/appliance_statistical"/>
     <item android:title="@string/exit" android:id="@+id/exit"/>
 </menu>

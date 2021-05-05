@@ -40,5 +40,16 @@
     <string name="group_nineteen">Group: 19th</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-    <string name="delete_compelete">Delete Compelete</string>
+    <string name="delete_complete">Delete Complete</string>
+    <string name="appliance_statistical">Appliance statistical</string>
+    <string name="date_return">Date return:</string>
+    <string name="return_complete">Return appliance complete</string>
+    <string name="detail_statistical">Appliances statistical by month</string>
+    <string name="choose_month_statistical">Choose month statistical</string>
+    <string name="quantity">Quantity:</string>
+    <string name="statistical_be_empty">Statistical of appliances be empty</string>
+    <string name="chart_title">Chart statistical of appliance</string>
+    <string name="month">month</string>
+    <string name="year">year</string>
+    <string name="at">at</string>
 </resources>

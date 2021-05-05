@@ -1,7 +1,8 @@
-package com.example.schoolappliancesmanager.model.repository;
+package com.example.schoolappliancesmanager.model.repository.Impl;
 
 import com.example.schoolappliancesmanager.model.database.domain.Room;
 import com.example.schoolappliancesmanager.model.database.local.RoomLocal;
+import com.example.schoolappliancesmanager.model.repository.RoomRepository;
 
 import java.util.List;
 

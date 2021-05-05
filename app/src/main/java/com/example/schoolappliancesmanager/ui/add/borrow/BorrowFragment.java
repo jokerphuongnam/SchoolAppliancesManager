@@ -57,7 +57,6 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
                 DetailUsed detailUsed = viewModel.getDetailUsed();
                 detailUsed.setDateUsed(calendar.getTimeInMillis());
                 binding.setDetailUsed(detailUsed);
-                binding.calendarChoose.setEnabled(true);
             };
         }
         return datePickerCallBack;
@@ -101,7 +100,6 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
         setUpActivityViewModel();
         binding.calendarChoose.setOnClickListener((v -> {
             getDatePicker().show();
-            binding.calendarChoose.setEnabled(false);
         }));
         initData();
         viewModel.initApplianceAndRoomName();

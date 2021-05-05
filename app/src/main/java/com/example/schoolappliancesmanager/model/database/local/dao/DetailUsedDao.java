@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.schoolappliancesmanager.model.database.domain.DetailUsed;
+import com.example.schoolappliancesmanager.model.database.domain.supportquery.ApplianceStatisticalByMonthTuple;
 import com.example.schoolappliancesmanager.model.database.local.DetailUsedLocal;
 
 import java.util.List;
@@ -35,4 +36,11 @@ public interface DetailUsedDao extends DetailUsedLocal {
     @Query("SELECT * FROM DETAIL_USED WHERE date_used BETWEEN :from AND :to")
     @Override
     Flowable<List<DetailUsed>> filter(long from, long to);
+
+    @Query("SELECT detail_used.appliance_id, appliances.appliance_name, appliances.dir_image, COUNT(detail_used.appliance_id) AS 'quantity' " +
+            "FROM  DETAIL_USED, APPLIANCES " +
+            "WHERE  detail_used.appliance_id = appliances.appliance_id AND ((:from IS NULL OR date_used >= :from OR :from = 0) AND (:to IS NULL OR date_used <= :to OR :to = 0)) " +
+            "LIMIT 10")
+    @Override
+    Flowable<List<ApplianceStatisticalByMonthTuple>> statisticalAppliancesByMonth(Long from, Long to);
 }

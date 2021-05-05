@@ -75,7 +75,7 @@ public class RoomFragment extends BaseFragment<FragmentRoomBinding, RoomViewMode
         });
         viewModel.getSuccess().observe(getViewLifecycleOwner(), resource -> {
             if (resource instanceof Resource.Success) {
-                showToast(getString(R.string.delete_compelete));
+                showToast(getString(R.string.delete_complete));
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

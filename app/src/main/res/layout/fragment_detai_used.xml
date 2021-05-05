@@ -10,149 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.coordinatorlayout.widget.CoordinatorLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone">
-
-                    <androidx.coordinatorlayout.widget.CoordinatorLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="fill_vertical|start"
-                        android:paddingRight="?android:attr/actionBarSize"
-                        android:layout_marginEnd="16dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:layout_gravity="top|start"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="3"
-                                android:gravity="center"
-                                android:text="@string/from" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="7"
-                                android:orientation="horizontal">
-
-                                <EditText
-                                    android:id="@+id/date_used_from"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:background="@android:color/transparent"
-                                    android:enabled="false"
-                                    android:gravity="center|start"
-                                    android:inputType="text"
-                                    android:textColor="?attr/blackWhite"
-                                    android:textColorHighlight="?attr/greyColor" />
-
-                                <ImageButton
-                                    android:id="@+id/calendar_choose_from"
-                                    android:layout_width="36dp"
-                                    android:layout_height="36dp"
-                                    android:tint="?attr/blackWhite"
-                                    app:backgroundTint="@android:color/transparent"
-                                    app:srcCompat="@drawable/ic_calendar" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:layout_gravity="bottom|start"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="3"
-                                android:gravity="center"
-                                android:text="@string/to" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="7"
-                                android:orientation="horizontal">
-
-                                <EditText
-                                    android:id="@+id/date_used_to"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:background="@android:color/transparent"
-                                    android:enabled="false"
-                                    android:gravity="center|start"
-                                    android:inputType="text"
-                                    android:textColor="?attr/blackWhite"
-                                    android:textColorHighlight="?attr/greyColor" />
-
-                                <ImageButton
-                                    android:id="@+id/calendar_choose_to"
-                                    android:layout_width="36dp"
-                                    android:layout_height="36dp"
-                                    android:tint="?attr/blackWhite"
-                                    app:backgroundTint="@android:color/transparent"
-                                    app:srcCompat="@drawable/ic_calendar" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/filter"
-                            android:layout_width="?android:attr/actionBarSize"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end|center"
-                            android:adjustViewBounds="true"
-                            android:backgroundTint="?android:attr/colorPrimary"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/ic_filter" />
-
-                        <ImageButton
-                            android:id="@+id/cancel_filter"
-                            android:layout_width="?android:attr/actionBarSize"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end|center"
-                            android:adjustViewBounds="true"
-                            android:backgroundTint="?android:attr/colorPrimary"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/ic_cancel_filter" />
-                    </LinearLayout>
-                </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-            </LinearLayout>
-        </ScrollView>
+            android:layout_height="match_parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_btn"
@@ -162,6 +23,7 @@
             android:layout_margin="32dp"
             android:clickable="true"
             app:backgroundTint="?android:attr/colorPrimary"
-            app:srcCompat="@drawable/ic_add" />
+            app:srcCompat="@drawable/ic_add"
+            app:tint="?attr/whiteBlack" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

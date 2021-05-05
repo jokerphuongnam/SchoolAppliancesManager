@@ -110,6 +110,49 @@ public class DetailUsedViewModel extends ViewModel {
         useCase.deleteDetailUsed(detailUsed).subscribe(getCompletableObserver());
     }
 
+    private MutableLiveData<Resource<Boolean>> returnAppliance;
+
+    public MutableLiveData<Resource<Boolean>> getReturnAppliance() {
+        if (returnAppliance == null) {
+            returnAppliance = new MutableLiveData<>();
+        }
+        return returnAppliance;
+    }
+
+    private CompletableObserver returnApplianceObserver;
+
+    private CompletableObserver getReturnApplianceObserver() {
+        if (returnApplianceObserver == null) {
+            returnApplianceObserver = new CompletableObserver() {
+                private Disposable disposable;
+
+                @Override
+                public void onSubscribe(@NonNull Disposable d) {
+                    disposable = d;
+                    getReturnAppliance().postValue(new Resource.Loading<>(true));
+                }
+
+                @Override
+                public void onComplete() {
+                    disposable.dispose();
+                    getReturnAppliance().postValue(new Resource.Success<>(true));
+                }
+
+                @Override
+                public void onError(@NonNull Throwable e) {
+                    disposable.dispose();
+                    e.printStackTrace();
+                    getReturnAppliance().postValue(new Resource.Error<>(""));
+                }
+            };
+        }
+        return returnApplianceObserver;
+    }
+
+    public void returnAppliance(DetailUsed detailUsed){
+        useCase.returnAppliance(detailUsed).subscribe(getReturnApplianceObserver());
+    }
+
     private Disposable filterDisposable;
 
     public void filter(long from, long to) {
