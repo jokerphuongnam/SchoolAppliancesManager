@@ -3,6 +3,7 @@ package com.example.schoolappliancesmanager.model.database.domain.supportquery;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class ApplianceStatisticalByMonthTuple implements Parcelable {
     @ColumnInfo(name = "quantity")
     private int quantity = 0;
 
-    protected ApplianceStatisticalByMonthTuple(Parcel in) {
+    protected ApplianceStatisticalByMonthTuple(@NonNull Parcel in) {
         applianceId = in.readInt();
         applianceName = in.readString();
         dirImage = in.readString();

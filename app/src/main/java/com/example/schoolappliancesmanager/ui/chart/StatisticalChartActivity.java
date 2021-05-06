@@ -40,8 +40,8 @@ public class StatisticalChartActivity extends BaseActivity<ActivityChartStatisti
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    private String getTitle(int year, int month) {
-        return year != 0 ? getString(R.string.chart_title) + " " + getString(R.string.at) + " " + getString(R.string.month) + " " + month + " " + getString(R.string.year) + " " + year :
+    private String getTitle(Integer year, Integer month) {
+        return year != null && year != 0 ? getString(R.string.chart_title) + " " + getString(R.string.at) + " " + getString(R.string.month) + " " + month + " " + getString(R.string.year) + " " + year :
                 getString(R.string.chart_title);
     }
 
@@ -50,7 +50,7 @@ public class StatisticalChartActivity extends BaseActivity<ActivityChartStatisti
         viewModel.getData().observe(this, applianceStatisticalByMonthTuples -> {
             BarChart applianceChart = binding.applianceChart;
             BarData barData = new BarData();
-            BarDataSet barDataSet = new BarDataSet(getDataChart(applianceStatisticalByMonthTuples), "");
+            BarDataSet barDataSet = new BarDataSet(getDataChart(applianceStatisticalByMonthTuples), getTitle(viewModel.getYear(), viewModel.getMonth()));
             barData.addDataSet(barDataSet);
             List<String> names = getNames(applianceStatisticalByMonthTuples);
             ValueFormatter valueFormatter = new ValueFormatter() {
@@ -68,7 +68,6 @@ public class StatisticalChartActivity extends BaseActivity<ActivityChartStatisti
             YAxis axisRight = applianceChart.getAxisRight();
             axisLeft.setGranularity(1);
             axisRight.setGranularity(1);
-
             applianceChart.setData(barData);
             applianceChart.invalidate();
         });

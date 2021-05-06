@@ -28,7 +28,7 @@ public class DefaultApplianceApplianceStatisticalUseCaseImpl implements Applianc
             Calendar startCalendar = Calendar.getInstance();
             startCalendar.set(year, month, 1, 0, 0, 0);
 
-            int lastDayOfMonth = LocalDate.of(year, month, 1).getMonth().length(Year.of(year).isLeap());
+            int lastDayOfMonth = LocalDate.of(year, month + 1, 1).getMonth().length(Year.of(year).isLeap());
             Calendar endCalendar = Calendar.getInstance();
             //assuming year/month/date information is not important
             endCalendar.set(year, month , lastDayOfMonth, 0, 0, 0);

@@ -1,6 +1,7 @@
 package com.example.schoolappliancesmanager.ui.main.statistical;
 
 import android.content.Intent;
+import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,6 +44,9 @@ public class StatisticalFragment extends BaseFragment<FragmentStatisticalBinding
             MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(requireContext(), (selectedMonth, selectedYear) -> {
                 viewModel.setTime(selectedYear, selectedMonth);
                 viewModel.statisticalByMonth();
+                binding.year.setText(String.valueOf(selectedYear));
+                binding.month.setText(String.valueOf(selectedMonth + 1));
+                binding.time.setVisibility(View.VISIBLE);
             }, today.get(Calendar.YEAR), today.get(Calendar.MONTH));
             builder.setTitle(getString(R.string.choose_month_statistical));
             monthPickerDialog = builder.build();

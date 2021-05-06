@@ -37,11 +37,28 @@ public interface DetailUsedDao extends DetailUsedLocal {
     @Override
     Flowable<List<DetailUsed>> filter(long from, long to);
 
-    @Query("SELECT DETAIL_USED.appliance_id, APPLIANCES.appliance_name, APPLIANCES.dir_image, COUNT(DETAIL_USED.appliance_id) AS 'quantity' " +
+    @Override
+    default Flowable<List<ApplianceStatisticalByMonthTuple>> statisticalAppliancesByMonth(Long from, Long to) {
+        if (from == null || from == 0) {
+            return statisticalAppliances();
+        } else {
+            return statisticalAppliances(from, to);
+        }
+    }
+
+    @Query("SELECT DETAIL_USED.appliance_id, APPLIANCES.appliance_name, APPLIANCES.dir_image , COUNT(DETAIL_USED.appliance_id) AS 'quantity' " +
             "FROM  DETAIL_USED, APPLIANCES " +
-            "WHERE  detail_used.appliance_id = APPLIANCES.appliance_id AND ((:from IS NULL OR date_used >= :from OR :from = 0) AND (:to IS NULL OR date_used <= :to OR :to = 0)) " +
+            "WHERE  detail_used.appliance_id = APPLIANCES.appliance_id " +
             "GROUP BY DETAIL_USED.appliance_id " +
             "LIMIT 10")
-    @Override
-    Flowable<List<ApplianceStatisticalByMonthTuple>> statisticalAppliancesByMonth(Long from, Long to);
+    Flowable<List<ApplianceStatisticalByMonthTuple>> statisticalAppliances();
+
+
+    @Query("SELECT DETAIL_USED.appliance_id, APPLIANCES.appliance_name, APPLIANCES.dir_image, COUNT(DETAIL_USED.appliance_id) AS 'quantity' " +
+            "FROM  DETAIL_USED, APPLIANCES " +
+            "WHERE  detail_used.appliance_id = APPLIANCES.appliance_id AND date_used BETWEEN :from AND :to " +
+            "GROUP BY DETAIL_USED.appliance_id " +
+            "LIMIT 10")
+    Flowable<List<ApplianceStatisticalByMonthTuple>> statisticalAppliances(Long from, Long to);
+
 }

@@ -133,6 +133,9 @@ public class BorrowFragment extends BaseFragment<FragmentBorrowBinding, BorrowVi
                     binding.borrowError.setVisibility(View.VISIBLE);
                     binding.borrowError.setText(R.string.class_name_empty);
                 } else {
+                    if (detailUsed.getDateUsed() == 0) {
+                        detailUsed.setDateUsed(Calendar.getInstance().getTimeInMillis());
+                    }
                     binding.borrowError.setVisibility(View.GONE);
                     detailUsed.setApplianceId(viewModel.getAppliances().getValue().get(binding.applianceSpinner.getSelectedItemPosition()).getApplianceId());
                     detailUsed.setRoomName(viewModel.getRooms().getValue().get(binding.roomSpinner.getSelectedItemPosition()).getRoomName());
