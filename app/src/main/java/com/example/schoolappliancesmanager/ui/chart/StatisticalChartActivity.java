@@ -10,11 +10,15 @@ import com.example.schoolappliancesmanager.R;
 import com.example.schoolappliancesmanager.databinding.ActivityChartStatisticalBinding;
 import com.example.schoolappliancesmanager.model.database.domain.supportquery.ApplianceStatisticalByMonthTuple;
 import com.example.schoolappliancesmanager.ui.base.BaseActivity;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,11 +48,29 @@ public class StatisticalChartActivity extends BaseActivity<ActivityChartStatisti
     @Override
     public void createView() {
         viewModel.getData().observe(this, applianceStatisticalByMonthTuples -> {
+            BarChart applianceChart = binding.applianceChart;
             BarData barData = new BarData();
-//            BarDataSet barDataSet = new BarDataSet(getDataChart(applianceStatisticalByMonthTuples), "");
-            getBarDataSet(applianceStatisticalByMonthTuples).forEach(barData::addDataSet);
-            binding.applianceChart.setData(barData);
-            binding.applianceChart.invalidate();
+            BarDataSet barDataSet = new BarDataSet(getDataChart(applianceStatisticalByMonthTuples), "");
+            barData.addDataSet(barDataSet);
+            List<String> names = getNames(applianceStatisticalByMonthTuples);
+            ValueFormatter valueFormatter = new ValueFormatter() {
+                @Override
+                public String getAxisLabel(float value, AxisBase axis) {
+                    return names.get((int) value - 1);
+                }
+            };
+            barData.setBarWidth(0.9f);
+            applianceChart.setFitBars(true);
+            XAxis xAxis = applianceChart.getXAxis();
+            xAxis.setGranularity(1f);
+            xAxis.setValueFormatter(valueFormatter);
+            YAxis axisLeft = applianceChart.getAxisLeft();
+            YAxis axisRight = applianceChart.getAxisRight();
+            axisLeft.setGranularity(1);
+            axisRight.setGranularity(1);
+
+            applianceChart.setData(barData);
+            applianceChart.invalidate();
         });
     }
 
@@ -56,13 +78,8 @@ public class StatisticalChartActivity extends BaseActivity<ActivityChartStatisti
         return applianceStatisticalByMonthTuples.stream().map((applianceStatisticalByMonthTuple) -> new BarEntry((float) applianceStatisticalByMonthTuple.getApplianceId(), (float) applianceStatisticalByMonthTuple.getQuantity())).collect(Collectors.toList());
     }
 
-    private List<BarDataSet> getBarDataSet(@NonNull List<ApplianceStatisticalByMonthTuple> applianceStatisticalByMonthTuples) {
-        return applianceStatisticalByMonthTuples.stream().map((applianceStatisticalByMonthTuple) -> {
-            List<BarEntry> barEntries = new ArrayList<>();
-            barEntries.add(new BarEntry(1.0f, (float) applianceStatisticalByMonthTuple.getQuantity()));
-            BarDataSet barDataSet = new BarDataSet(barEntries, applianceStatisticalByMonthTuple.getApplianceName());
-            return barDataSet;
-        }).collect(Collectors.toList());
+    private List<String> getNames(@NonNull List<ApplianceStatisticalByMonthTuple> applianceStatisticalByMonthTuples) {
+        return applianceStatisticalByMonthTuples.stream().map(ApplianceStatisticalByMonthTuple::getApplianceName).collect(Collectors.toList());
     }
 
     @Override
